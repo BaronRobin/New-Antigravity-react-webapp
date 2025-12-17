@@ -85,13 +85,8 @@ const Dashboard = () => {
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
                 {/* 3D Preview */}
-                <div className="glass" style={{ padding: '0', overflow: 'hidden', minHeight: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                    <div style={{ padding: '2rem', textAlign: 'center' }}>
-                        <h3 style={{ fontSize: '2rem', marginBottom: '2rem' }}>Interactive Showcase</h3>
-                        <div style={{ position: 'relative', width: '100%', height: '300px' }}>
-                            <WebGLShowcase />
-                        </div>
-                    </div>
+                <div className="glass" style={{ padding: '0', overflow: 'hidden', minHeight: '400px' }}>
+                    <WebGLShowcase />
                 </div>
 
                 {/* Details & Actions */}
