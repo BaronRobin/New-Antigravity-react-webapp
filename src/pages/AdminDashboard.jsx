@@ -5,8 +5,9 @@ import { Navigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
     const { user, orders, updateOrderStatus } = useAuth();
-    const { getLiveFeed, onlineUsers } = useAnalytics();
+    const { getLiveFeed, onlineUsers, sendLogsToPi } = useAnalytics();
     const [activeTab, setActiveTab] = useState('orders'); // 'orders' or 'analytics'
+    const [piStatus, setPiStatus] = useState(null);
 
     if (!user || user.role !== 'admin') {
         return <Navigate to="/login" />;
@@ -122,7 +123,22 @@ const AdminDashboard = () => {
 
                     {/* Live Feed */}
                     <div className="glass" style={{ padding: '2rem', maxHeight: '500px', overflowY: 'auto' }}>
-                        <h3 style={{ marginBottom: '1.5rem' }}>Activity Feed</h3>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                            <h3>Activity Feed</h3>
+                            <button
+                                className="btn btn-primary"
+                                style={{ fontSize: '0.8rem', padding: '0.5rem 1rem' }}
+                                onClick={async () => {
+                                    setPiStatus('Sending...');
+                                    const result = await sendLogsToPi();
+                                    setPiStatus(result.success ? '✅ Sent to Pi!' : '❌ Failed');
+                                    setTimeout(() => setPiStatus(null), 3000);
+                                }}
+                            >
+                                📤 Send to Pi
+                            </button>
+                        </div>
+                        {piStatus && <div style={{ marginBottom: '1rem', padding: '0.5rem', background: 'rgba(201, 169, 97, 0.1)', borderRadius: '5px', textAlign: 'center', fontSize: '0.9rem' }}>{piStatus}</div>}
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                             {logs.map((log, i) => (
                                 <div key={i} style={{

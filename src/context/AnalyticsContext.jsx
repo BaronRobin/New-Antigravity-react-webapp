@@ -50,6 +50,29 @@ export const AnalyticsProvider = ({ children, user }) => {
         });
     };
 
+    // Send logs to Raspberry Pi backend
+    const sendLogsToPi = async () => {
+        const PI_SERVER_URL = 'http://192.168.1.61:3001'; // Your Pi's IP
+        const combined = getLiveFeed();
+
+        if (combined.length === 0) return { success: false, message: 'No logs to send' };
+
+        try {
+            const response = await fetch(`${PI_SERVER_URL}/api/analytics`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ logs: combined })
+            });
+
+            const data = await response.json();
+            console.log('✅ Logs sent to Pi:', data);
+            return data;
+        } catch (error) {
+            console.error('❌ Failed to send logs to Pi:', error);
+            return { success: false, error: error.message };
+        }
+    };
+
     // Combined logs for Admin
     const getLiveFeed = () => {
         const combined = [...pageLog, ...clickLog].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
@@ -57,7 +80,7 @@ export const AnalyticsProvider = ({ children, user }) => {
     };
 
     return (
-        <AnalyticsContext.Provider value={{ getLiveFeed, onlineUsers }}>
+        <AnalyticsContext.Provider value={{ getLiveFeed, onlineUsers, sendLogsToPi }}>
             {children}
         </AnalyticsContext.Provider>
     );
