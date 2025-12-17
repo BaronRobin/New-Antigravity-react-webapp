@@ -26,15 +26,41 @@ const ArExperience = () => {
         return () => window.removeEventListener('keydown', handleEsc);
     }, []);
 
-    const requestUsage = () => {
-        // Mock permission request logic
-        if (cameraPermission === 'prompt') {
-            alert("This site would like to access your camera for AR features.");
-            setCameraPermission('granted');
-        } else if (cameraPermission === 'granted') {
-            alert("Starting AR Session... (This is a demo)");
+    const videoRef = React.useRef(null);
+    const [stream, setStream] = useState(null);
+
+    const stopCamera = () => {
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+            setStream(null);
         }
     };
+
+    const requestUsage = async () => {
+        try {
+            const mediaStream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: 'user' },
+                audio: false
+            });
+            setStream(mediaStream);
+            setCameraPermission('granted');
+            // Wait for video ref to be available
+            setTimeout(() => {
+                if (videoRef.current) {
+                    videoRef.current.srcObject = mediaStream;
+                }
+            }, 100);
+        } catch (err) {
+            console.error("Camera error:", err);
+            setCameraPermission('denied');
+            alert("Could not access camera. Please ensure you have granted permission.");
+        }
+    };
+
+    // Cleanup on unmount
+    useEffect(() => {
+        return () => stopCamera();
+    }, [stream]);
 
     const containerStyle = {
         minHeight: '100vh',
@@ -91,7 +117,7 @@ const ArExperience = () => {
 
     return (
         <div style={containerStyle}>
-            <div className="glass" style={{ padding: '2rem', borderRadius: '20px', width: '100%', maxWidth: '400px' }}>
+            <div className="glass" style={{ padding: '2rem', borderRadius: '20px', width: '100%', maxWidth: '400px', zIndex: 2 }}>
                 <h1 className="gradient-text" style={{ fontSize: '2rem', marginBottom: '1rem' }}>AR Try-On</h1>
                 <p style={{ marginBottom: '2rem', color: '#ccc' }}>
                     Visualize custom grillz in real-time.
@@ -100,22 +126,35 @@ const ArExperience = () => {
                 <div className="ar-viewport-placeholder" style={{
                     width: '100%',
                     height: '400px',
-                    background: 'rgba(0,0,0,0.3)',
+                    background: '#000',
                     borderRadius: '15px',
                     marginBottom: '2rem',
-                    border: '1px dashed #444',
+                    border: '1px solid #333',
+                    position: 'relative',
+                    overflow: 'hidden',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center',
-                    flexDirection: 'column'
+                    justifyContent: 'center'
                 }}>
-                    <FaCamera style={{ fontSize: '3rem', opacity: 0.5, marginBottom: '1rem' }} />
-                    <span style={{ fontSize: '0.9rem', color: '#888' }}>Camera Feed Placeholder</span>
+                    {cameraPermission === 'granted' ? (
+                        <video
+                            ref={videoRef}
+                            autoPlay
+                            playsInline
+                            muted
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
+                    ) : (
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <FaCamera style={{ fontSize: '3rem', opacity: 0.5, marginBottom: '1rem' }} />
+                            <span style={{ fontSize: '0.9rem', color: '#888' }}>Camera Feed Inactive</span>
+                        </div>
+                    )}
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <button className="btn btn-primary" onClick={requestUsage}>
-                        {cameraPermission === 'granted' ? 'Start Session' : 'Enable Camera Access'}
+                    <button className="btn btn-primary" onClick={requestUsage} disabled={cameraPermission === 'granted'}>
+                        {cameraPermission === 'granted' ? 'Session Active' : 'Enable Camera Access'}
                     </button>
 
                     <button

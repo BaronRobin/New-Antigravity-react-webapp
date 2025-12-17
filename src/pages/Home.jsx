@@ -5,7 +5,6 @@ import WebGLShowcase from '../components/WebGLShowcase';
 import BehindTheDesign from '../components/BehindTheDesign';
 import DigitalPipeline from '../components/DigitalPipeline';
 import Craftsmanship from '../components/Craftsmanship';
-import AboutMe from '../components/AboutMe';
 import ARVisualization from '../components/ARVisualization';
 
 const Home = () => {
