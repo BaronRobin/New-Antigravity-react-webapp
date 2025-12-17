@@ -19,7 +19,6 @@ const Home = () => {
             <WebGLShowcase />
 
             <div id="process">
-                <BehindTheDesign />
                 <DigitalPipeline />
             </div>
 
@@ -30,6 +29,8 @@ const Home = () => {
             <div id="ar-section">
                 <ARVisualization />
             </div>
+
+            <BehindTheDesign />
         </div>
     );
 };

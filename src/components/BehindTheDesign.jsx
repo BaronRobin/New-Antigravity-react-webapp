@@ -58,21 +58,6 @@ const BehindTheDesign = () => {
                         </div>
                     </div>
                 </div>
-
-                <div className="stats-container">
-                    <div className="stat-item fade-in-up stagger-2">
-                        <div className="stat-number gradient-text">8,000+</div>
-                        <div className="stat-label">Polygons Per Model</div>
-                    </div>
-                    <div className="stat-item fade-in-up stagger-3">
-                        <div className="stat-number gradient-text">0.1mm</div>
-                        <div className="stat-label">Precision Tolerance</div>
-                    </div>
-                    <div className="stat-item fade-in-up stagger-4">
-                        <div className="stat-number gradient-text">10+</div>
-                        <div className="stat-label">Material Options</div>
-                    </div>
-                </div>
             </div>
         </section>
     );
