@@ -65,10 +65,17 @@ const Material3DCard = ({ material, isGyroEnabled, onRequestPermission }) => {
         const mouseX = 50 + (yOffset * 2);
         const mouseY = 50 + (xOffset * 2);
 
+        // Dynamic Shadow: Opposite to rotation
+        // If card rotates RIGHT (pos Y), shadow goes LEFT (neg X)
+        const shadowX = rotateY * -1.5;
+        const shadowY = rotateX * -1.5;
+
         setStyle({
             transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
             '--mouse-x': `${mouseX}%`,
-            '--mouse-y': `${mouseY}%`
+            '--mouse-y': `${mouseY}%`,
+            '--shadow-x': `${shadowX}px`,
+            '--shadow-y': `${shadowY}px`
         });
     };
 
@@ -87,10 +94,16 @@ const Material3DCard = ({ material, isGyroEnabled, onRequestPermission }) => {
         const rotateX = ((y - centerY) / centerY) * -12;
         const rotateY = ((x - centerX) / centerX) * 12;
 
+        // Dynamic Shadow
+        const shadowX = rotateY * -1.5;
+        const shadowY = rotateX * -1.5;
+
         setStyle({
             transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
             '--mouse-x': `${x}px`,
-            '--mouse-y': `${y}px`
+            '--mouse-y': `${y}px`,
+            '--shadow-x': `${shadowX}px`,
+            '--shadow-y': `${shadowY}px`
         });
     };
 
@@ -98,7 +111,9 @@ const Material3DCard = ({ material, isGyroEnabled, onRequestPermission }) => {
         setStyle({
             transform: 'rotateX(0deg) rotateY(0deg)',
             '--mouse-x': '50%',
-            '--mouse-y': '50%'
+            '--mouse-y': '50%',
+            '--shadow-x': '0px',
+            '--shadow-y': '20px' // Reset to default "down" shadow
         });
     };
 
@@ -115,7 +130,11 @@ const Material3DCard = ({ material, isGyroEnabled, onRequestPermission }) => {
     return (
         <div
             className="material-card-wrapper-3d"
-            onClick={onRequestPermission} /* Global request trigger */
+            onClick={() => {
+                // Haptic feedback on interact/unlock
+                if (navigator.vibrate) navigator.vibrate(15);
+                onRequestPermission();
+            }}
         >
             <div
                 ref={cardRef}
