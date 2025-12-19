@@ -15,6 +15,7 @@ import { AnalyticsProvider } from './context/AnalyticsContext';
 import { useAuth } from './context/AuthContext'; // Import hook to pass user to Analytics
 import './App.css';
 import './styles/animations.css';
+import MobileTabBar from './components/MobileTabBar';
 
 // Wrapper to pass auth user to analytics
 const AppProviders = ({ children }) => {
@@ -57,6 +58,7 @@ const AppContent = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/admin" element={<AdminDashboard />} />
         </Routes>
+        <MobileTabBar />
         {!shouldHideFooter && <Footer />}
       </div>
     </>
