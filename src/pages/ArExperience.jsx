@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import * as THREE from 'three';
-import { MindARThree } from 'mind-ar/dist/mindar-image-three.prod.js';
+// import { MindARThree } from 'mind-ar/dist/mindar-image-three.prod.js';
 import '../App.css';
 
 const MATERIALS = [
@@ -158,6 +158,7 @@ const ArExperience = () => {
 
     const startAR = async () => {
         setArStarted(true);
+        /* 
         const mindarThree = new MindARThree({
             container: containerRef.current,
             imageTargetSrc: '/targets.mind',
@@ -194,6 +195,7 @@ const ArExperience = () => {
             console.error("Camera access failed", e);
             setArStarted(false);
         }
+        */
     };
 
     const nextModel = () => setModelIndex((prev) => (prev + 1) % MOCK_MODELS.length);

@@ -32,9 +32,9 @@ const Hero = () => {
                     >
                         Explore the Pipeline
                     </button>
-                    <Link to="/ar-experience" className="btn btn-secondary">
+                    {/* <Link to="/ar-experience" className="btn btn-secondary">
                         View AR Experience
-                    </Link>
+                    </Link> */}
                 </div>
 
                 <div className="scroll-indicator fade-in stagger-4">

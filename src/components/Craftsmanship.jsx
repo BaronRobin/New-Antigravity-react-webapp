@@ -361,7 +361,7 @@ const Craftsmanship = () => {
                 <div className="process-description glass-dark fade-in-down stagger-4" style={{ border: 'none' }}>
                     <h3>The Process</h3>
                     <p>
-                        Each piece is handcrafted by expert artisans over months of meticulous work.
+                        Each piece is handcrafted by expert artisans over months of work.
                         From initial 3D printing of master molds using castable resin to final polishing
                         with progressive abrasives, every step demands precision and patience. The result
                         is a wearable masterpiece that merges digital perfection with human craftsmanship.

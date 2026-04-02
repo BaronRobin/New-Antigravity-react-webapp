@@ -74,9 +74,9 @@ const ARVisualization = () => {
 
                     <div className="ar-cta fade-in-up stagger-5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
                         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-                            <Link to="/ar-experience" className="btn btn-primary">
+                            {/* <Link to="/ar-experience" className="btn btn-primary">
                                 Launch AR Experience
-                            </Link>
+                            </Link> */}
                             <Link to="/shop" className="btn btn-secondary">
                                 View WebGL 3D Models
                             </Link>

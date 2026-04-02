@@ -9,8 +9,9 @@ const PageGuide = () => {
     const flow = {
         '/': { next: '/process', label: 'See The Process' },
         '/process': { next: '/craft', label: 'Explore Craftsmanship' },
-        '/craft': { next: '/ar-experience', label: 'Try in AR' },
-        '/ar-experience': { next: '/', label: 'Back to Showcase' }
+        '/craft': { next: '/', label: 'Back to Showcase' }
+        // '/craft': { next: '/ar-experience', label: 'Try in AR' },
+        // '/ar-experience': { next: '/', label: 'Back to Showcase' }
     };
 
     // If current path isn't in flow (e.g. /about), don't show guide

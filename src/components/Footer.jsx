@@ -30,7 +30,7 @@ const Footer = () => {
                             <li><button onClick={() => [handleScroll('process')]} className="footer-nav-btn">The Process</button></li>
                             <li><button onClick={() => [handleScroll('craft')]} className="footer-nav-btn">Craftsmanship</button></li>
                             <li><Link to="/about" className="footer-nav-btn">About The Creator</Link></li>
-                            <li><Link to="/ar-experience" className="footer-nav-btn">AR Experience</Link></li>
+                            {/* <li><Link to="/ar-experience" className="footer-nav-btn">AR Experience</Link></li> */}
                         </ul>
                     </div>
 

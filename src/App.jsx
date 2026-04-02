@@ -4,7 +4,7 @@ import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
-import ArExperience from './pages/ArExperience';
+// import ArExperience from './pages/ArExperience';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import AdminDashboard from './pages/AdminDashboard';
@@ -43,7 +43,7 @@ const AppContent = () => {
   const location = useLocation();
 
   // Pages where footer should be hidden
-  const hideFooterRoutes = ['/login', '/dashboard', '/admin', '/ar-experience', '/shop', '/force-reset'];
+  const hideFooterRoutes = ['/login', '/dashboard', '/admin', /* '/ar-experience', */ '/shop', '/force-reset'];
   const shouldHideFooter = hideFooterRoutes.includes(location.pathname);
 
   return (
@@ -55,7 +55,7 @@ const AppContent = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/ar-experience" element={<ArExperience />} />
+          {/* <Route path="/ar-experience" element={<ArExperience />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route path="/admin" element={<PrivateRoute requireAdmin={true}><AdminDashboard /></PrivateRoute>} />

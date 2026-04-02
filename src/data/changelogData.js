@@ -1,5 +1,14 @@
 export const changelogData = [
     {
+        version: "v0.9.0",
+        changes: [
+            "Reordered digital pipeline flow: Dashboard generation immediately follows Request.",
+            "Moved Checkout to final step before shipping.",
+            "Removed all MindAR visualization components and routes.",
+            "Streamlined text copy across 3D Design and Craftsmanship sections."
+        ]
+    },
+    {
         version: "v0.8.5",
         changes: [
             "Reworked admin dashboard: replaced order table with visual Kanban pipeline board.",

@@ -13,33 +13,33 @@ const DigitalPipeline = () => {
             videoSrc: '/assets/pipeline-placeholder.mp4'
         },
         {
-            number: '02', title: 'Consultation',
-            description: 'Get in direct, 1-on-1 contact with designer Robin Baron to discuss your exact vision, material, and fit.',
-            videoSrc: '/assets/pipeline-placeholder.mp4'
-        },
-        {
-            number: '03', title: 'Imprint & Scan',
-            description: 'Provide a standard physical teeth imprint mold, or send over a high-fidelity 3D intraoral scan.',
-            videoSrc: '/assets/pipeline-placeholder.mp4'
-        },
-        {
-            number: '04', title: '3D Design',
-            description: 'We meticulously sculpt and design your custom idea into a photorealistic 3D printable model.',
-            videoSrc: '/assets/pipeline-placeholder.mp4'
-        },
-        {
-            number: '05', title: 'Dashboard',
+            number: '02', title: 'Dashboard',
             description: 'Log in to your exclusive client dashboard to review live design progress and interactive 3D variants.',
             videoSrc: '/assets/pipeline-placeholder.mp4'
         },
         {
-            number: '06', title: 'Checkout',
-            description: 'Approve your final chosen 3D design variant and securely process your payment online.',
+            number: '03', title: 'Consultation',
+            description: 'Get in direct, 1-on-1 contact with designer Robin Baron to discuss your exact vision, material, and fit.',
             videoSrc: '/assets/pipeline-placeholder.mp4'
         },
         {
-            number: '07', title: 'Craftsmanship',
-            description: 'The raw casting is meticulously hand-finished and polished. Premium stones are bead-set under microscope.',
+            number: '04', title: 'Imprint & Scan',
+            description: 'Provide a standard physical teeth imprint mold, or send over a high-fidelity 3D intraoral scan.',
+            videoSrc: '/assets/pipeline-placeholder.mp4'
+        },
+        {
+            number: '05', title: '3D Design',
+            description: 'We sculpt and design your custom idea into a photorealistic 3D printable model.',
+            videoSrc: '/assets/pipeline-placeholder.mp4'
+        },
+        {
+            number: '06', title: 'Craftsmanship',
+            description: 'The raw casting is hand-finished and polished. Premium stones are bead-set under microscope.',
+            videoSrc: '/assets/pipeline-placeholder.mp4'
+        },
+        {
+            number: '07', title: 'Checkout',
+            description: 'Pay for your grillz and be excited for delivery.',
             videoSrc: '/assets/pipeline-placeholder.mp4'
         },
         {
