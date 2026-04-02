@@ -1,5 +1,15 @@
 export const changelogData = [
     {
+        version: "v0.9.5",
+        changes: [
+            "Optimized mobile viewports: Scaled down major headlines using fluid typography clamps.",
+            "Refactored Pipeline behavior on mobile to enforce continuous focus states, resolving double-tap issues.",
+            "Adjusted mobile overlay opacities to retain background video shine-through on smaller screens.",
+            "Standardized punctuation by swapping all string emdashes globally.",
+            "Configured Admin Dashboard to dynamically extract and display the administrator's name from Supabase identity metadata."
+        ]
+    },
+    {
         version: "v0.9.0",
         changes: [
             "Reordered digital pipeline flow: Dashboard generation immediately follows Request.",
@@ -14,7 +24,7 @@ export const changelogData = [
             "Reworked admin dashboard: replaced order table with visual Kanban pipeline board.",
             "Added All Users panel powered by Supabase profiles table.",
             "Added Messages tab in admin dashboard with per-order chat threads.",
-            "Introduced in-app messaging on user dashboard — replacing external contact buttons.",
+            "Introduced in-app messaging on user dashboard - replacing external contact buttons.",
             "Quote details (material, notes, date, device) now preserved as a snapshot on order approval.",
             "Auto pre-filled email draft button on incoming quote requests.",
             "Fixed WebGL 3D model viewer crash with Suspense and ErrorBoundary.",

@@ -129,7 +129,17 @@ const AdminDashboard = () => {
         <div style={{ paddingTop: '100px', minHeight: '100vh', paddingBottom: '4rem' }} className="container">
             <div className="section-header fade-in-up">
                 <h2 className="gradient-text">Mission Control</h2>
-                <p style={{ color: '#aaa' }}>Admin Panel — {user.email}</p>
+                {(() => {
+                    let displayName = user.email.split('@')[0];
+                    if (user.user_metadata && (user.user_metadata.full_name || user.user_metadata.name)) {
+                        const fullName = user.user_metadata.full_name || user.user_metadata.name;
+                        const nameParts = fullName.trim().split(' ');
+                        displayName = nameParts[nameParts.length - 1];
+                    }
+                    // Capitalize
+                    displayName = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+                    return <p style={{ color: '#aaa' }}>Admin Panel - {displayName}</p>;
+                })()}
             </div>
 
             {/* Tabs */}
@@ -198,7 +208,7 @@ const AdminDashboard = () => {
                                                 </td>
                                                 <td style={{ padding: '1rem' }}>
                                                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                                                        {/* Approve & Invite — creates account + sends invite email */}
+                                                        {/* Approve & Invite - creates account + sends invite email */}
                                                         <button
                                                             className="btn btn-primary"
                                                             style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem', borderRadius: '4px', opacity: invitingUser === email ? 0.6 : 1 }}
@@ -211,7 +221,7 @@ const AdminDashboard = () => {
                                                                     // Open pre-filled invite email
                                                                     const subject = encodeURIComponent('Your Custom Grillz Order Has Been Approved');
                                                                     const body = encodeURIComponent(
-                                                                        `Hi ${ticket.name},\n\nGreat news — your quote request for ${(ticket.materialId || ticket.material_id || 'custom grillz').replace(/_/g, ' ')} has been reviewed and approved.\n\nYour client dashboard is now live. You can log in using the details below:\n\n  URL: https://baronrobin.github.io/3d-grillz/#/login\n  Email: ${email}\n  Temporary password: WelcomeOnboard!\n\nYou will be prompted to choose your own password on your first login.\n\nFrom your dashboard you can:\n  • Track the progress of your order in real time\n  • View your 3D design previews\n  • Send messages directly to the team\n\nDon't hesitate to reach out if you have any questions.\n\nBest,\nRobin Baron`
+                                                                        `Hi ${ticket.name},\n\nGreat news - your quote request for ${(ticket.materialId || ticket.material_id || 'custom grillz').replace(/_/g, ' ')} has been reviewed and approved.\n\nYour client dashboard is now live. You can log in using the details below:\n\n  URL: https://baronrobin.github.io/3d-grillz/#/login\n  Email: ${email}\n  Temporary password: WelcomeOnboard!\n\nYou will be prompted to choose your own password on your first login.\n\nFrom your dashboard you can:\n  • Track the progress of your order in real time\n  • View your 3D design previews\n  • Send messages directly to the team\n\nDon't hesitate to reach out if you have any questions.\n\nBest,\nRobin Baron`
                                                                     );
                                                                     window.open(`mailto:${email}?subject=${subject}&body=${body}`);
                                                                 } else {
@@ -225,7 +235,7 @@ const AdminDashboard = () => {
                                                         {/* Decline */}
                                                         <button className="btn btn-secondary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem', borderRadius: '4px' }} onClick={() => updateTicketStatus(email, 'declined')}>Decline</button>
 
-                                                        {/* Draft Reply — contextual email with full request details */}
+                                                        {/* Draft Reply - contextual email with full request details */}
                                                         <a
                                                             href={`mailto:${email}?subject=${encodeURIComponent('Re: Your Custom Grillz Quote Request')}&body=${encodeURIComponent(
                                                                 `Hi ${ticket.name},\n\nThank you for reaching out about your custom grillz request.\n\nHere's a summary of what you submitted:\n  Material: ${(ticket.materialId || ticket.material_id || 'N/A').replace(/_/g, ' ')}\n  Device: ${ticket.device_os || 'Unknown'}\n  Your notes: "${ticket.comments || 'None provided'}"\n\nI'm currently reviewing your request and will get back to you shortly with next steps.\n\nBest,\nRobin Baron`
@@ -370,10 +380,10 @@ const AdminDashboard = () => {
                                                     <div style={{ fontSize: '0.75rem', color: '#666' }}>{email}</div>
                                                 </td>
                                                 <td style={{ padding: '0.75rem', textTransform: 'capitalize', color: '#aaa' }}>
-                                                    {order.original_quote?.material_id || ['Gold', 'Classic', 'Diamond'][order.modelType] || '—'}
+                                                    {order.original_quote?.material_id || ['Gold', 'Classic', 'Diamond'][order.modelType] || '-'}
                                                 </td>
                                                 <td style={{ padding: '0.75rem', color: '#666', fontSize: '0.85rem', maxWidth: '260px' }}>
-                                                    {order.original_quote?.comments || order.comments || '—'}
+                                                    {order.original_quote?.comments || order.comments || '-'}
                                                 </td>
                                                 <td style={{ padding: '0.75rem' }}>
                                                     <button className="btn btn-secondary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem', borderRadius: '4px' }} onClick={() => openEdit(email)}>
@@ -414,13 +424,13 @@ const AdminDashboard = () => {
                                                     <div style={{ fontSize: '0.75rem', color: '#666' }}>{email}</div>
                                                 </td>
                                                 <td style={{ padding: '0.75rem', textTransform: 'capitalize', color: '#aaa' }}>
-                                                    {ticket.materialId || ticket.material_id || '—'}
+                                                    {ticket.materialId || ticket.material_id || '-'}
                                                 </td>
                                                 <td style={{ padding: '0.75rem', color: '#666', fontSize: '0.85rem', maxWidth: '260px' }}>
-                                                    {ticket.comments || '—'}
+                                                    {ticket.comments || '-'}
                                                 </td>
                                                 <td style={{ padding: '0.75rem', color: '#666', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
-                                                    {ticket.created_at ? new Date(ticket.created_at).toLocaleDateString() : '—'}
+                                                    {ticket.created_at ? new Date(ticket.created_at).toLocaleDateString() : '-'}
                                                 </td>
                                             </tr>
                                         ))}
@@ -588,7 +598,7 @@ const AdminDashboard = () => {
                                     <div><span style={{ color: '#666' }}>Name: </span><span style={{ color: '#ccc' }}>{orders[editingUser].original_quote.name}</span></div>
                                     <div><span style={{ color: '#666' }}>Material: </span><span style={{ color: '#ccc', textTransform: 'capitalize' }}>{orders[editingUser].original_quote.material_id}</span></div>
                                     <div><span style={{ color: '#666' }}>Device: </span><span style={{ color: '#ccc' }}>{orders[editingUser].original_quote.device_os}</span></div>
-                                    <div><span style={{ color: '#666' }}>Date: </span><span style={{ color: '#ccc' }}>{orders[editingUser].original_quote.created_at ? new Date(orders[editingUser].original_quote.created_at).toLocaleDateString() : '—'}</span></div>
+                                    <div><span style={{ color: '#666' }}>Date: </span><span style={{ color: '#ccc' }}>{orders[editingUser].original_quote.created_at ? new Date(orders[editingUser].original_quote.created_at).toLocaleDateString() : '-'}</span></div>
                                 </div>
                                 {orders[editingUser].original_quote.comments && (
                                     <div style={{ marginTop: '0.5rem', color: '#ccc', fontSize: '0.85rem', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '0.5rem' }}>

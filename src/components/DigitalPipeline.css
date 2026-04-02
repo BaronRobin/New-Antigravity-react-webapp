@@ -143,3 +143,25 @@
     opacity: 1;
     transform: translateY(0);
 }
+
+/* On mobile devices, force details to always stay visible to avoid double-tap UX */
+@media (max-width: 900px) {
+    .pipeline-video {
+        opacity: 0.35;
+        filter: blur(2px) grayscale(80%) sepia(20%);
+    }
+    
+    .pipeline-overlay {
+        background: linear-gradient(to top, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.6) 100%);
+    }
+    
+    .step-description {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .step-title {
+        color: var(--color-accent);
+        transform: translateY(-5px);
+    }
+}

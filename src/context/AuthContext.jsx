@@ -26,7 +26,8 @@ export const AuthProvider = ({ children }) => {
                 const parsedUser = {
                     email: session.user.email,
                     role: session.user.email === adminEmail ? 'admin' : 'user',
-                    uid: session.user.id
+                    uid: session.user.id,
+                    user_metadata: session.user.user_metadata
                 };
                 setUser(parsedUser);
                 if (parsedUser.role === 'admin') {
@@ -46,7 +47,8 @@ export const AuthProvider = ({ children }) => {
                 const parsedUser = {
                     email: session.user.email,
                     role: session.user.email === adminEmail ? 'admin' : 'user',
-                    uid: session.user.id
+                    uid: session.user.id,
+                    user_metadata: session.user.user_metadata
                 };
                 setUser(parsedUser);
                 if (parsedUser.role === 'admin') {
@@ -66,7 +68,7 @@ export const AuthProvider = ({ children }) => {
 
     const fetchAdminData = async () => {
         try {
-            // Fetch tickets (all statuses — pending, approved, declined)
+            // Fetch tickets (all statuses - pending, approved, declined)
             const { data: ticketData, error: tErr } = await supabase.from('tickets').select('*');
             if (!tErr && ticketData) {
                 const ticketMap = {};
@@ -470,7 +472,7 @@ export const AuthProvider = ({ children }) => {
 
     const approveAndInvite = async (email) => {
         try {
-            // 1. Snapshot ticket data BEFORE signUp — signUp may fire auth listeners
+            // 1. Snapshot ticket data BEFORE signUp - signUp may fire auth listeners
             //    that reset state, causing approveTicket to see an empty tickets map.
             const ticket = tickets[email];
             if (!ticket) return { success: false, error: 'Ticket not found' };
@@ -481,7 +483,7 @@ export const AuthProvider = ({ children }) => {
                 password: TEMP_PASSWORD
             });
 
-            // Ignore "already registered" — user might already have an account
+            // Ignore "already registered" - user might already have an account
             if (signUpError && !signUpError.message.toLowerCase().includes('already registered')) {
                 return { success: false, error: signUpError.message };
             }

@@ -16,7 +16,7 @@ const Hero = () => {
             </div>
 
             <div className="hero-content container">
-                <h1 className="hero-title fade-in-up" style={{ fontSize: '4.5rem', lineHeight: '1.1', marginBottom: '1.5rem' }}>
+                <h1 className="hero-title fade-in-up">
                     <span className="gradient-text">The 0-100 Digital Hub</span>
                     <br />For Custom Grillz
                 </h1>

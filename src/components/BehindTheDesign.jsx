@@ -55,7 +55,7 @@ const BehindTheDesign = () => {
                         <div className="card-content">
                             <h3>Cultural Expression</h3>
                             <p>
-                                Dental grillz transcend mere decoration—they represent identity, status, and
+                                Dental grillz transcend mere decoration-they represent identity, status, and
                                 artistic expression rooted in hip-hop culture. This project honors that legacy
                                 while exploring new dimensions through technology.
                             </p>

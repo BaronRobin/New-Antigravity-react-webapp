@@ -52,9 +52,9 @@ const DigitalPipeline = () => {
     return (
         <section className="digital-pipeline section" id="pipeline">
             <div className="container">
-                <div className="section-header fade-in-up">
-                    <h2 style={{ fontSize: '3.5rem', marginBottom: '10px' }}>The 0-100 Pipeline</h2>
-                    <p className="section-subtitle" style={{ fontSize: '1.2rem', color: '#aaa', maxWidth: '600px', margin: '0 auto' }}>
+                <div className="section-header fade-in-up" style={{ textAlign: 'center', marginBottom: '3rem' }}>
+                    <h2>The 0-100 Pipeline</h2>
+                    <p className="section-subtitle" style={{ color: '#aaa', maxWidth: '600px', margin: '0 auto' }}>
                         A completely seamless digital workflow from initial request to final sparkle. Hover over any step to explore.
                     </p>
                 </div>
