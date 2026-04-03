@@ -23,7 +23,7 @@ const BehindTheDesign = () => {
                             <p>
                                 The design draws inspiration from traditional jewelry craftsmanship while
                                 pushing boundaries through computational design. Using advanced 3D modeling
-                                techniques in Blender and Houdini, each piece becomes a unique expression
+                                techniques in Blender and ZBrush, each piece becomes a unique expression
                                 of digital creativity.
                             </p>
                         </div>
@@ -59,6 +59,28 @@ const BehindTheDesign = () => {
                                 artistic expression rooted in hip-hop culture. This project honors that legacy
                                 while exploring new dimensions through technology.
                             </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="tech-comparison fade-in-up" style={{ marginTop: '4rem' }}>
+                    <h3 style={{ textAlign: 'center', marginBottom: '2rem', fontSize: '1.8rem' }}>Technology Stack</h3>
+                    <div className="tech-stack-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
+                        <div className="tech-item glass-dark" style={{ padding: '1.5rem', borderRadius: '15px', textAlign: 'center' }}>
+                            <div className="tech-name" style={{ color: 'var(--color-accent)', fontWeight: 'bold', marginBottom: '0.5rem' }}>React & WebGL</div>
+                            <div className="tech-desc" style={{ fontSize: '0.9rem', color: '#ccc' }}>Immersive 3D browser showcase</div>
+                        </div>
+                        <div className="tech-item glass-dark" style={{ padding: '1.5rem', borderRadius: '15px', textAlign: 'center' }}>
+                            <div className="tech-name" style={{ color: 'var(--color-accent)', fontWeight: 'bold', marginBottom: '0.5rem' }}>Blender & ZBrush</div>
+                            <div className="tech-desc" style={{ fontSize: '0.9rem', color: '#ccc' }}>High-fidelity 3D modeling & sculpting</div>
+                        </div>
+                        <div className="tech-item glass-dark" style={{ padding: '1.5rem', borderRadius: '15px', textAlign: 'center' }}>
+                            <div className="tech-name" style={{ color: 'var(--color-accent)', fontWeight: 'bold', marginBottom: '0.5rem' }}>Tripo3D API</div>
+                            <div className="tech-desc" style={{ fontSize: '0.9rem', color: '#ccc' }}>AI approximation for custom proofs</div>
+                        </div>
+                        <div className="tech-item glass-dark" style={{ padding: '1.5rem', borderRadius: '15px', textAlign: 'center' }}>
+                            <div className="tech-name" style={{ color: 'var(--color-accent)', fontWeight: 'bold', marginBottom: '0.5rem' }}>glTF 2.0</div>
+                            <div className="tech-desc" style={{ fontSize: '0.9rem', color: '#ccc' }}>Optimized real-time asset delivery</div>
                         </div>
                     </div>
                 </div>

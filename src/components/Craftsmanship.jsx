@@ -361,10 +361,7 @@ const Craftsmanship = () => {
                 <div className="process-description glass-dark fade-in-down stagger-4" style={{ border: 'none' }}>
                     <h3>The Process</h3>
                     <p>
-                        Each piece is handcrafted by expert artisans over months of work.
-                        From initial 3D printing of master molds using castable resin to final polishing
-                        with progressive abrasives, every step demands precision and patience. The result
-                        is a wearable masterpiece that merges digital perfection with human craftsmanship.
+                        Our designs are put through as fast as possible so each client gets their pieces as soon as humanly possible, without ever compromising the high standards Baron Grillz are known for. Customer happiness is a big factor in our work. From initial 3D printing of master molds using castable resin to final polishing, every step demands precision. The result is a wearable masterpiece that merges digital perfection with human craftsmanship.
                     </p>
 
                     <div className={`process-details ${showDetails ? 'show' : ''}`} style={{

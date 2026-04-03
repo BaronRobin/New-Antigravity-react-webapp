@@ -5,7 +5,6 @@ import Hero from '../components/Hero';
 import BehindTheDesign from '../components/BehindTheDesign';
 import DigitalPipeline from '../components/DigitalPipeline';
 import Craftsmanship from '../components/Craftsmanship';
-import ARVisualization from '../components/ARVisualization';
 
 const Home = () => {
     // Reset scroll on mount
@@ -23,10 +22,6 @@ const Home = () => {
 
             <div id="craft">
                 <Craftsmanship />
-            </div>
-
-            <div id="ar-section">
-                <ARVisualization />
             </div>
 
             <BehindTheDesign />
