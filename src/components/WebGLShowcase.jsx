@@ -174,7 +174,7 @@ const WebGLShowcase = ({ forcedMaterial, hideHeader = false, hideFullscreen = fa
     const currentGrillFile = validModelUrl || `${import.meta.env.BASE_URL}models/${grillConfig[index].file}`;
 
     return (
-        <section className={`webgl-section section ${hideHeader ? 'no-padding' : ''}`} id="showcase" style={hideHeader ? { background: 'transparent' } : {}}>
+        <section className={`webgl-section section ${hideHeader ? 'no-padding' : ''}`} id="showcase" style={hideHeader ? { background: 'transparent', height: '100%' } : {}}>
             <div className="container" style={hideHeader ? { height: '100%', display: 'flex', flexDirection: 'column', padding: 0 } : {}}>
                 {!hideHeader && (
                     <div className="section-header fade-in-up">
@@ -182,8 +182,8 @@ const WebGLShowcase = ({ forcedMaterial, hideHeader = false, hideFullscreen = fa
                     </div>
                 )}
 
-                <div className="showcase-card fade-in-up" style={{ background: 'transparent', boxShadow: 'none', flexGrow: 1 }}>
-                    <div className="canvas-wrapper">
+                <div className="showcase-card fade-in-up" style={hideHeader ? { background: 'transparent', boxShadow: 'none', flexGrow: 1, display: 'flex', flexDirection: 'column', padding: 0 } : { background: 'transparent', boxShadow: 'none', flexGrow: 1 }}>
+                    <div className="canvas-wrapper" style={hideHeader ? { height: '100%', flexGrow: 1, minHeight: '60vh' } : {}}>
                         <CanvasErrorBoundary>
                             <Suspense fallback={<ModelLoader />}>
                                 <Canvas camera={{ position: [0, 0, 0.15], fov: 45, near: 0.001 }}>
