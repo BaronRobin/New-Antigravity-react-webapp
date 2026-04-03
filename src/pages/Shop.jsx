@@ -53,11 +53,48 @@ const Shop = () => {
                     <div className="shop-viewer-wrapper glass-panel">
                         <WebGLShowcase
                             hideHeader={true}
+                            hideFullscreen={true}
                             showUpperJaw={showUpperJaw}
                             showLowerJaw={showLowerJaw}
                             lightRotation={lightRotation}
                             forcedMaterial={{ color: currentMaterialProps.color, roughness: currentMaterialProps.roughness }}
                         />
+                    </div>
+                    <div className="glass-panel" style={{ marginTop: '1rem', padding: '1.5rem' }}>
+                        <h3 style={{ marginTop: 0 }}>View Controls</h3>
+                        <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem', padding: '0.5rem 0' }}>
+                            <label style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer', fontSize: '0.95rem', color: '#eee' }}>
+                                <input 
+                                    type="checkbox" 
+                                    checked={showUpperJaw} 
+                                    onChange={(e) => setShowUpperJaw(e.target.checked)} 
+                                    style={{ accentColor: 'var(--color-accent)', width: '18px', height: '18px', cursor: 'pointer' }}
+                                />
+                                Upper Jaw
+                            </label>
+                            <label style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer', fontSize: '0.95rem', color: '#eee' }}>
+                                <input 
+                                    type="checkbox" 
+                                    checked={showLowerJaw} 
+                                    onChange={(e) => setShowLowerJaw(e.target.checked)} 
+                                    style={{ accentColor: 'var(--color-accent)', width: '18px', height: '18px', cursor: 'pointer' }}
+                                />
+                                Lower Jaw
+                            </label>
+                        </div>
+                        
+                        <h3 style={{ marginTop: 0 }}>Light Rotation</h3>
+                        <div style={{ padding: '0.5rem 0 0 0', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                            <input 
+                                type="range" 
+                                min="0" 
+                                max="360" 
+                                value={lightRotation} 
+                                onChange={(e) => setLightRotation(parseInt(e.target.value))} 
+                                style={{ flex: 1, accentColor: 'var(--color-accent)' }} 
+                            />
+                            <span style={{ fontSize: '0.85rem', color: '#aaa', minWidth: '40px', textAlign: 'right' }}>{lightRotation}°</span>
+                        </div>
                     </div>
                 </div>
 
@@ -80,42 +117,7 @@ const Shop = () => {
                         </div>
                     </div>
 
-                    <div className="config-section">
-                        <h3>Toggle Jaws</h3>
-                        <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem', padding: '0.5rem 0' }}>
-                            <label style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer', fontSize: '0.95rem', color: '#eee' }}>
-                                <input 
-                                    type="checkbox" 
-                                    checked={showUpperJaw} 
-                                    onChange={(e) => setShowUpperJaw(e.target.checked)} 
-                                    style={{ accentColor: 'var(--color-accent)', width: '18px', height: '18px', cursor: 'pointer' }}
-                                />
-                                Upper Jaw
-                            </label>
-                            <label style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer', fontSize: '0.95rem', color: '#eee' }}>
-                                <input 
-                                    type="checkbox" 
-                                    checked={showLowerJaw} 
-                                    onChange={(e) => setShowLowerJaw(e.target.checked)} 
-                                    style={{ accentColor: 'var(--color-accent)', width: '18px', height: '18px', cursor: 'pointer' }}
-                                />
-                                Lower Jaw
-                            </label>
-                        </div>
-                        
-                        <h3>Light Rotation</h3>
-                        <div style={{ padding: '0.8rem 0 1rem 0', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                            <input 
-                                type="range" 
-                                min="0" 
-                                max="360" 
-                                value={lightRotation} 
-                                onChange={(e) => setLightRotation(parseInt(e.target.value))} 
-                                style={{ flex: 1, accentColor: 'var(--color-accent)' }} 
-                            />
-                            <span style={{ fontSize: '0.85rem', color: '#aaa', minWidth: '40px', textAlign: 'right' }}>{lightRotation}°</span>
-                        </div>
-                    </div>
+
 
                     <div className="config-section">
                         <h3>Contact Info</h3>

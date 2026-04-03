@@ -140,7 +140,7 @@ const GrillModel = ({ visible, geometryType, color = "#eec95e", roughness = 0.1,
     );
 };
 
-const WebGLShowcase = ({ forcedMaterial, hideHeader = false, modelUrl, showUpperJaw = true, showLowerJaw = false, lightRotation = 0 }) => {
+const WebGLShowcase = ({ forcedMaterial, hideHeader = false, hideFullscreen = false, modelUrl, showUpperJaw = true, showLowerJaw = false, lightRotation = 0 }) => {
     const [index, setIndex] = useState(0);
     
     // Configuration array mapping the UI name to the actual 3D file name in public/models
@@ -217,24 +217,26 @@ const WebGLShowcase = ({ forcedMaterial, hideHeader = false, modelUrl, showUpper
                             <span>Drag to Rotate | Scroll to Zoom</span>
                         </div>
 
-                        <div className="view-controls">
-                            <button
-                                className="view-btn"
-                                onClick={() => {
-                                    const elem = document.querySelector('.canvas-wrapper');
-                                    if (!document.fullscreenElement) {
-                                        elem.requestFullscreen().catch(err => {
-                                            console.log(`Error attempting to enable fullscreen: ${err.message}`);
-                                        });
-                                    } else {
-                                        document.exitFullscreen();
-                                    }
-                                }}
-                                title="Toggle Fullscreen"
-                            >
-                                ⛶
-                            </button>
-                        </div>
+                        {!hideFullscreen && (
+                            <div className="view-controls">
+                                <button
+                                    className="view-btn"
+                                    onClick={() => {
+                                        const elem = document.querySelector('.canvas-wrapper');
+                                        if (!document.fullscreenElement) {
+                                            elem.requestFullscreen().catch(err => {
+                                                console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                                            });
+                                        } else {
+                                            document.exitFullscreen();
+                                        }
+                                    }}
+                                    title="Toggle Fullscreen"
+                                >
+                                    ⛶
+                                </button>
+                            </div>
+                        )}
 
                         <div className="design-controls">
                             {!validModelUrl && (
