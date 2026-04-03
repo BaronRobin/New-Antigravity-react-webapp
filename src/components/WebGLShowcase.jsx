@@ -100,13 +100,7 @@ const CustomModel = ({ url, color, roughness, metalness = 1.0 }) => {
 const GrillModel = ({ visible, geometryType, color = "#eec95e", roughness = 0.1, modelUrl, showUpperJaw, showLowerJaw }) => {
     const mesh = useRef();
 
-    useFrame((state) => {
-        const t = state.clock.getElapsedTime();
-        if (mesh.current) {
-            mesh.current.rotation.y = Math.sin(t / 4) / 2;
-            mesh.current.rotation.z = (1 + Math.sin(t / 1.5)) / 20;
-        }
-    });
+    // Removed manual useFrame rotation to ensure ONLY up/down bobbing
 
     return (
         <group ref={mesh} visible={visible}>
@@ -145,6 +139,24 @@ const WebGLShowcase = ({ forcedMaterial, hideHeader = false, hideFullscreen = fa
     const [showUpperJaw, setShowUpperJaw] = useState(true);
     const [showLowerJaw, setShowLowerJaw] = useState(false);
     const [lightRotation, setLightRotation] = useState(0);
+    const [autoRotate, setAutoRotate] = useState(true);
+    const rotationTimeoutRef = useRef(null);
+
+    const handleInteractionStart = () => {
+        setAutoRotate(false);
+        if (rotationTimeoutRef.current) {
+            clearTimeout(rotationTimeoutRef.current);
+        }
+    };
+
+    const handleInteractionEnd = () => {
+        if (rotationTimeoutRef.current) {
+            clearTimeout(rotationTimeoutRef.current);
+        }
+        rotationTimeoutRef.current = setTimeout(() => {
+            setAutoRotate(true);
+        }, 10000);
+    };
     
     // Configuration array mapping the UI name to the actual 3D file name in public/models
     const grillConfig = [
@@ -191,7 +203,7 @@ const WebGLShowcase = ({ forcedMaterial, hideHeader = false, hideFullscreen = fa
                                         />
                                     </Suspense>
 
-                                    <Float speed={2} rotationIntensity={0.05} floatIntensity={0.01}>
+                                    <Float speed={2} rotationIntensity={0} floatIntensity={0.02}>
                                         <GrillModel
                                             geometryType={index}
                                             visible={true}
@@ -206,11 +218,13 @@ const WebGLShowcase = ({ forcedMaterial, hideHeader = false, hideFullscreen = fa
                                     <OrbitControls 
                                         enableZoom={true} 
                                         enablePan={false} 
-                                        autoRotate 
+                                        autoRotate={autoRotate}
                                         autoRotateSpeed={1} 
                                         maxDistance={0.5} 
                                         minDistance={0.01} 
                                         target={[0, 0, -0.035]} 
+                                        onStart={handleInteractionStart}
+                                        onEnd={handleInteractionEnd}
                                     />
                                 </Canvas>
                             </Suspense>
@@ -220,8 +234,8 @@ const WebGLShowcase = ({ forcedMaterial, hideHeader = false, hideFullscreen = fa
                             <span>Drag to Rotate | Scroll to Zoom</span>
                         </div>
 
-                        {!hideFullscreen && (
-                            <div className="view-controls" style={{ flexDirection: 'column' }}>
+                        <div className="view-controls" style={{ flexDirection: 'column' }}>
+                            {!hideFullscreen && (
                                 <button
                                     className="view-btn"
                                     onClick={() => {
@@ -238,15 +252,15 @@ const WebGLShowcase = ({ forcedMaterial, hideHeader = false, hideFullscreen = fa
                                 >
                                     ⛶
                                 </button>
-                                <button
-                                    className="view-btn"
-                                    onClick={() => setLightRotation(prev => (prev + 45) % 360)}
-                                    title="Rotate Lighting"
-                                >
-                                    ☼
-                                </button>
-                            </div>
-                        )}
+                            )}
+                            <button
+                                className="view-btn"
+                                onClick={() => setLightRotation(prev => (prev + 45) % 360)}
+                                title="Rotate Lighting"
+                            >
+                                ☼
+                            </button>
+                        </div>
 
                         <div className="design-controls">
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginRight: '1rem' }}>
