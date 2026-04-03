@@ -140,8 +140,11 @@ const GrillModel = ({ visible, geometryType, color = "#eec95e", roughness = 0.1,
     );
 };
 
-const WebGLShowcase = ({ forcedMaterial, hideHeader = false, hideFullscreen = false, modelUrl, showUpperJaw = true, showLowerJaw = false, lightRotation = 0 }) => {
+const WebGLShowcase = ({ forcedMaterial, hideHeader = false, hideFullscreen = false, modelUrl }) => {
     const [index, setIndex] = useState(0);
+    const [showUpperJaw, setShowUpperJaw] = useState(true);
+    const [showLowerJaw, setShowLowerJaw] = useState(false);
+    const [lightRotation, setLightRotation] = useState(0);
     
     // Configuration array mapping the UI name to the actual 3D file name in public/models
     const grillConfig = [
@@ -218,7 +221,7 @@ const WebGLShowcase = ({ forcedMaterial, hideHeader = false, hideFullscreen = fa
                         </div>
 
                         {!hideFullscreen && (
-                            <div className="view-controls">
+                            <div className="view-controls" style={{ flexDirection: 'column' }}>
                                 <button
                                     className="view-btn"
                                     onClick={() => {
@@ -235,10 +238,32 @@ const WebGLShowcase = ({ forcedMaterial, hideHeader = false, hideFullscreen = fa
                                 >
                                     ⛶
                                 </button>
+                                <button
+                                    className="view-btn"
+                                    onClick={() => setLightRotation(prev => (prev + 45) % 360)}
+                                    title="Rotate Lighting"
+                                >
+                                    ☼
+                                </button>
                             </div>
                         )}
 
                         <div className="design-controls">
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginRight: '1rem' }}>
+                                <button 
+                                    className={`control-btn jaw-toggle ${showUpperJaw ? 'active' : ''}`} 
+                                    onClick={() => setShowUpperJaw(!showUpperJaw)} 
+                                    title="Toggle Upper Jaw"
+                                    style={{ width: '30px', height: '30px', fontSize: '0.9rem', backgroundColor: showUpperJaw ? 'var(--color-accent)' : 'transparent', color: showUpperJaw ? '#000' : 'var(--color-text)', border: '1px solid rgba(255,255,255,0.2)' }}
+                                >U</button>
+                                <button 
+                                    className={`control-btn jaw-toggle ${showLowerJaw ? 'active' : ''}`} 
+                                    onClick={() => setShowLowerJaw(!showLowerJaw)} 
+                                    title="Toggle Lower Jaw"
+                                    style={{ width: '30px', height: '30px', fontSize: '0.9rem', backgroundColor: showLowerJaw ? 'var(--color-accent)' : 'transparent', color: showLowerJaw ? '#000' : 'var(--color-text)', border: '1px solid rgba(255,255,255,0.2)' }}
+                                >L</button>
+                            </div>
+
                             {!validModelUrl && (
                                 <button className="control-btn" onClick={prevDesign}>
                                     <FaChevronLeft />

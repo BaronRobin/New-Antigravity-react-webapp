@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Shop.css';
+import '../components/Craftsmanship.css';
 import WebGLShowcase from '../components/WebGLShowcase';
 
 const Shop = () => {
@@ -9,19 +10,18 @@ const Shop = () => {
     const [comments, setComments] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [showUpperJaw, setShowUpperJaw] = useState(true);
-    const [showLowerJaw, setShowLowerJaw] = useState(false);
-    const [lightRotation, setLightRotation] = useState(0);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     const { submitQuoteRequest } = useAuth();
     const navigate = useNavigate();
 
     const materials = [
-        { id: 'gold', name: '18K Solid Gold', color: '#eec95e', roughness: 0.1 },
-        { id: 'white-gold', name: '18K White Gold', color: '#eef2f5', roughness: 0.05 },
-        { id: 'silver', name: 'Sterling Silver', color: '#cccccc', roughness: 0.2 },
-        { id: 'rose-gold', name: '18K Rose Gold', color: '#b76e79', roughness: 0.1 }
+        { id: 'gold', name: 'Gold', className: 'mat-gold', color: '#eec95e', roughness: 0.1 },
+        { id: 'silver', name: 'Sterling Silver', className: 'mat-silver', color: '#cccccc', roughness: 0.2 },
+        { id: 'titanium', name: 'Titanium', className: 'mat-titanium', color: '#a0b2c6', roughness: 0.6 },
+        { id: 'rose-gold', name: 'Rose Gold', className: 'mat-rose', color: '#b76e79', roughness: 0.3 },
+        { id: 'black-gold', name: 'Black Gold', className: 'mat-black-gold', color: '#2a2a2a', roughness: 0.8 },
+        { id: 'diamond', name: 'VVS Diamond', className: 'mat-diamond', color: '#eef2f5', roughness: 0.05 }
     ];
 
     const currentMaterialProps = materials.find(m => m.id === selectedMaterial);
@@ -54,47 +54,8 @@ const Shop = () => {
                         <WebGLShowcase
                             hideHeader={true}
                             hideFullscreen={true}
-                            showUpperJaw={showUpperJaw}
-                            showLowerJaw={showLowerJaw}
-                            lightRotation={lightRotation}
                             forcedMaterial={{ color: currentMaterialProps.color, roughness: currentMaterialProps.roughness }}
                         />
-                    </div>
-                    <div className="glass-panel" style={{ marginTop: '1rem', padding: '1.5rem' }}>
-                        <h3 style={{ marginTop: 0 }}>View Controls</h3>
-                        <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem', padding: '0.5rem 0' }}>
-                            <label style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer', fontSize: '0.95rem', color: '#eee' }}>
-                                <input 
-                                    type="checkbox" 
-                                    checked={showUpperJaw} 
-                                    onChange={(e) => setShowUpperJaw(e.target.checked)} 
-                                    style={{ accentColor: 'var(--color-accent)', width: '18px', height: '18px', cursor: 'pointer' }}
-                                />
-                                Upper Jaw
-                            </label>
-                            <label style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer', fontSize: '0.95rem', color: '#eee' }}>
-                                <input 
-                                    type="checkbox" 
-                                    checked={showLowerJaw} 
-                                    onChange={(e) => setShowLowerJaw(e.target.checked)} 
-                                    style={{ accentColor: 'var(--color-accent)', width: '18px', height: '18px', cursor: 'pointer' }}
-                                />
-                                Lower Jaw
-                            </label>
-                        </div>
-                        
-                        <h3 style={{ marginTop: 0 }}>Light Rotation</h3>
-                        <div style={{ padding: '0.5rem 0 0 0', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                            <input 
-                                type="range" 
-                                min="0" 
-                                max="360" 
-                                value={lightRotation} 
-                                onChange={(e) => setLightRotation(parseInt(e.target.value))} 
-                                style={{ flex: 1, accentColor: 'var(--color-accent)' }} 
-                            />
-                            <span style={{ fontSize: '0.85rem', color: '#aaa', minWidth: '40px', textAlign: 'right' }}>{lightRotation}°</span>
-                        </div>
                     </div>
                 </div>
 
@@ -104,21 +65,29 @@ const Shop = () => {
 
                     <div className="config-section">
                         <h3>Select Material</h3>
-                        <div className="material-options">
+                        <div className="material-options" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem', marginTop: '1rem' }}>
                             {materials.map(mat => (
-                                <button
+                                <div
                                     key={mat.id}
-                                    className={`material-btn ${selectedMaterial === mat.id ? 'active' : ''}`}
                                     onClick={() => setSelectedMaterial(mat.id)}
+                                    style={{
+                                        cursor: 'pointer',
+                                        borderRadius: '12px',
+                                        border: selectedMaterial === mat.id ? '2px solid var(--color-accent)' : '2px solid transparent',
+                                        padding: '4px',
+                                        transition: 'all 0.2s ease'
+                                    }}
                                 >
-                                    <span className="mat-name">{mat.name}</span>
-                                </button>
+                                    <div className={`material-layer-bg ${mat.className}`} style={{ height: '50px', borderRadius: '8px', position: 'relative', overflow: 'hidden' }}>
+                                        <div className="material-card-glare"></div>
+                                    </div>
+                                    <div style={{ textAlign: 'center', marginTop: '0.5rem', fontSize: '0.8rem', color: selectedMaterial === mat.id ? 'var(--color-accent)' : 'var(--color-text)' }}>
+                                        <strong>{mat.name}</strong>
+                                    </div>
+                                </div>
                             ))}
                         </div>
                     </div>
-
-
-
                     <div className="config-section">
                         <h3>Contact Info</h3>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1rem' }}>
@@ -140,13 +109,13 @@ const Shop = () => {
 
                         <h3>Design Details</h3>
                         <p className="text-muted" style={{ marginBottom: '1rem', fontSize: '0.9rem' }}>
-                            Describe your ideas. (Min 5 characters)
+                            Please describe your custom design in as much detail as possible to help us perfect your piece. (Min 20 characters)
                         </p>
                         <textarea
                             className="shop-textarea"
                             value={comments}
                             onChange={(e) => setComments(e.target.value)}
-                            placeholder="I would like a custom diamond cut..."
+                            placeholder="I would like a custom diamond cut on the upper incisors, with an open face..."
                             rows="4"
                         ></textarea>
                     </div>
@@ -158,7 +127,7 @@ const Shop = () => {
                         <button
                             type="button"
                             className="btn btn-primary full-width"
-                            disabled={comments.trim().length < 5 || name.trim().length === 0 || !email.includes('@') || !email.includes('.') || email.split('.').pop().length < 2}
+                            disabled={comments.trim().length < 20 || name.trim().length === 0 || !email.includes('@') || !email.includes('.') || email.split('.').pop().length < 2}
                             onClick={async (e) => {
                                 e.preventDefault();
                                 const res = await submitQuoteRequest(email, {
