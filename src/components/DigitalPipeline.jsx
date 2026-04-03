@@ -10,42 +10,42 @@ const DigitalPipeline = () => {
         {
             number: '01', title: 'Request',
             description: 'Initiate your custom grillz journey directly from our digital shop. No physical meetups required.',
-            videoSrc: '/assets/pipeline-placeholder.mp4'
+            videoSrc: `${import.meta.env.BASE_URL}assets/pipeline-placeholder.mp4`
         },
         {
             number: '02', title: 'Dashboard',
             description: 'Log in to your exclusive client dashboard to review live design progress and interactive 3D variants.',
-            videoSrc: '/assets/pipeline-placeholder.mp4'
+            videoSrc: `${import.meta.env.BASE_URL}assets/pipeline-placeholder.mp4`
         },
         {
             number: '03', title: 'Consultation',
             description: 'Get in direct, 1-on-1 contact with designer Robin Baron to discuss your exact vision, material, and fit.',
-            videoSrc: '/assets/pipeline-placeholder.mp4'
+            videoSrc: `${import.meta.env.BASE_URL}assets/pipeline-placeholder.mp4`
         },
         {
             number: '04', title: 'Imprint & Scan',
             description: 'Provide a standard physical teeth imprint mold, or send over a high-fidelity 3D intraoral scan.',
-            videoSrc: '/assets/pipeline-placeholder.mp4'
+            videoSrc: `${import.meta.env.BASE_URL}assets/pipeline-placeholder.mp4`
         },
         {
             number: '05', title: '3D Design',
             description: 'We sculpt and design your custom idea into a photorealistic 3D printable model.',
-            videoSrc: '/assets/pipeline-placeholder.mp4'
+            videoSrc: `${import.meta.env.BASE_URL}assets/pipeline-placeholder.mp4`
         },
         {
             number: '06', title: 'Craftsmanship',
             description: 'The raw casting is hand-finished and polished. Premium stones are bead-set under microscope.',
-            videoSrc: '/assets/pipeline-placeholder.mp4'
+            videoSrc: `${import.meta.env.BASE_URL}assets/pipeline-placeholder.mp4`
         },
         {
             number: '07', title: 'Checkout',
             description: 'Pay for your grillz and be excited for delivery.',
-            videoSrc: '/assets/pipeline-placeholder.mp4'
+            videoSrc: `${import.meta.env.BASE_URL}assets/pipeline-placeholder.mp4`
         },
         {
             number: '08', title: 'Shipping',
             description: 'Your finished custom masterpiece is securely packaged and shipped fully insured, directly to your door.',
-            videoSrc: '/assets/pipeline-placeholder.mp4'
+            videoSrc: `${import.meta.env.BASE_URL}assets/pipeline-placeholder.mp4`
         }
     ];
 

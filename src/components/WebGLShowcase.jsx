@@ -114,12 +114,12 @@ const GrillModel = ({ visible, geometryType, color = "#eec95e", roughness = 0.1,
              <group position={[0, 0, 0]}>
                  {showUpperJaw && (
                      <Suspense fallback={null}>
-                         <CustomModel url="/models/upper_teeth.glb" color="#ffffff" roughness={0.4} metalness={0.1} />
+                         <CustomModel url={`${import.meta.env.BASE_URL}models/upper_teeth.glb`} color="#ffffff" roughness={0.4} metalness={0.1} />
                      </Suspense>
                  )}
                  {showLowerJaw && (
                      <Suspense fallback={null}>
-                         <CustomModel url="/models/lower_teeth.glb" color="#ffffff" roughness={0.4} metalness={0.1} />
+                         <CustomModel url={`${import.meta.env.BASE_URL}models/lower_teeth.glb`} color="#ffffff" roughness={0.4} metalness={0.1} />
                      </Suspense>
                  )}
             </group>
@@ -132,7 +132,7 @@ const GrillModel = ({ visible, geometryType, color = "#eec95e", roughness = 0.1,
                     </Suspense>
                 ) : (
                     <Suspense fallback={null}>
-                        <CustomModel url={`/models/model${geometryType + 1}.glb`} color={color} roughness={roughness} />
+                        <CustomModel url={`${import.meta.env.BASE_URL}models/model${geometryType + 1}.glb`} color={color} roughness={roughness} />
                     </Suspense>
                 )}
             </group>
@@ -156,7 +156,7 @@ const WebGLShowcase = ({ forcedMaterial, hideHeader = false, modelUrl, showUpper
     const prevDesign = () => setIndex((prev) => (prev - 1 + designs.length) % designs.length);
 
     const validModelUrl = modelUrl && typeof modelUrl === 'string' && modelUrl.trim() !== '' ? modelUrl : null;
-    const currentGrillFile = validModelUrl || `/models/${grillConfig[index].file}`;
+    const currentGrillFile = validModelUrl || `${import.meta.env.BASE_URL}models/${grillConfig[index].file}`;
 
     return (
         <section className={`webgl-section section ${hideHeader ? 'no-padding' : ''}`} id="showcase" style={hideHeader ? { background: 'transparent' } : {}}>

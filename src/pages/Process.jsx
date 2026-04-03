@@ -21,7 +21,7 @@ const Process = () => {
                 opacity: 0.3
             }}>
                 {/* <video autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }}>
-                    <source src="/assets/process-loop.webm" type="video/webm" />
+                    <source src={`${import.meta.env.BASE_URL}assets/process-loop.webm`} type="video/webm" />
                 </video> */}
                 <div style={{ width: '100%', height: '100%', background: 'linear-gradient(45deg, #000, #222)' }}></div>
             </div>

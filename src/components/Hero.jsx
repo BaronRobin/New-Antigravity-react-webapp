@@ -8,7 +8,7 @@ const Hero = () => {
             <div className="hero-background">
                 {/* User to replace src with actual webm video path */}
                 {/* <video autoPlay loop muted playsInline className="hero-video">
-                    <source src="/assets/hero-loop.webm" type="video/webm" />
+                    <source src={`${import.meta.env.BASE_URL}assets/hero-loop.webm`} type="video/webm" />
                 </video> */}
                 {/* Placeholder gradient until video is added */}
                 <div className="hero-video-placeholder"></div>
