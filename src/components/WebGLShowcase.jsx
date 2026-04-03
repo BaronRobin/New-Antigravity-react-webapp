@@ -68,27 +68,36 @@ const ModelLoader = () => (
     </div>
 );
 
-const CustomModel = ({ url, color, roughness }) => {
+const CustomModel = ({ url, color, roughness, metalness = 1.0 }) => {
     const { scene } = useGLTF(url);
 
     React.useEffect(() => {
         if (scene) {
             scene.traverse((child) => {
                 if (child.isMesh && child.material) {
-                    child.material = child.material.clone();
-                    child.material.color.set(color);
-                    child.material.metalness = 1.0;
-                    child.material.roughness = roughness;
-                    child.material.needsUpdate = true;
+                    const applyMaterial = (mat) => {
+                        mat.color.set(color);
+                        mat.metalness = metalness;
+                        mat.roughness = roughness;
+                        mat.needsUpdate = true;
+                    };
+                    
+                    if (Array.isArray(child.material)) {
+                        child.material = child.material.map(m => m.clone());
+                        child.material.forEach(applyMaterial);
+                    } else {
+                        child.material = child.material.clone();
+                        applyMaterial(child.material);
+                    }
                 }
             });
         }
-    }, [scene, color, roughness]);
+    }, [scene, color, roughness, metalness]);
 
-    return <primitive object={scene} scale={2} />;
+    return <primitive object={scene} scale={1} />;
 };
 
-const GrillModel = ({ visible, geometryType, color = "#eec95e", roughness = 0.1, modelUrl }) => {
+const GrillModel = ({ visible, geometryType, color = "#eec95e", roughness = 0.1, modelUrl, showUpperJaw, showLowerJaw }) => {
     const mesh = useRef();
 
     useFrame((state) => {
@@ -99,41 +108,55 @@ const GrillModel = ({ visible, geometryType, color = "#eec95e", roughness = 0.1,
         }
     });
 
-    if (modelUrl && typeof modelUrl === 'string' && modelUrl.trim() !== '') {
-        return (
-            <group dispose={null} ref={mesh} visible={visible}>
-                <Suspense fallback={null}>
-                    <CustomModel url={modelUrl} color={color} roughness={roughness} />
-                </Suspense>
-            </group>
-        );
-    }
-
     return (
-        <group dispose={null}>
-            <mesh ref={mesh} visible={visible}>
-                {geometryType === 0 && <torusKnotGeometry args={[0.8, 0.2, 128, 32]} />}
-                {geometryType === 1 && <torusGeometry args={[0.8, 0.4, 16, 100]} />}
-                {geometryType === 2 && <octahedronGeometry args={[1, 0]} />}
+        <group ref={mesh} visible={visible}>
+            {/* Stable White Jaw Mesh Platform */}
+             <group position={[0, 0, 0]}>
+                 {showUpperJaw && (
+                     <Suspense fallback={null}>
+                         <CustomModel url="/models/upper_teeth.glb" color="#ffffff" roughness={0.4} metalness={0.1} />
+                     </Suspense>
+                 )}
+                 {showLowerJaw && (
+                     <Suspense fallback={null}>
+                         <CustomModel url="/models/lower_teeth.glb" color="#ffffff" roughness={0.4} metalness={0.1} />
+                     </Suspense>
+                 )}
+            </group>
 
-                <meshStandardMaterial
-                    color={color}
-                    metalness={1}
-                    roughness={roughness}
-                />
-            </mesh>
+            {/* Dynamic Grill overlay */}
+            <group position={[0, 0, 0]}>
+                {modelUrl && typeof modelUrl === 'string' && modelUrl.trim() !== '' ? (
+                    <Suspense fallback={null}>
+                        <CustomModel url={modelUrl} color={color} roughness={roughness} />
+                    </Suspense>
+                ) : (
+                    <Suspense fallback={null}>
+                        <CustomModel url={`/models/model${geometryType + 1}.glb`} color={color} roughness={roughness} />
+                    </Suspense>
+                )}
+            </group>
         </group>
     );
 };
 
-const WebGLShowcase = ({ forcedMaterial, hideHeader = false, modelUrl }) => {
+const WebGLShowcase = ({ forcedMaterial, hideHeader = false, modelUrl, showUpperJaw = true, showLowerJaw = false, lightRotation = 0 }) => {
     const [index, setIndex] = useState(0);
-    const designs = modelUrl ? ['Your AI Design Estimation'] : ['Custom Molded Gold', 'Classic Grill', 'Diamond Cut'];
+    
+    // Configuration array mapping the UI name to the actual 3D file name in public/models
+    const grillConfig = [
+        { name: 'Vampire Fangs', file: 'vampire_teeth.glb' },
+        { name: 'Classic Grill', file: 'classic_grill.glb' },   // update these files when you get them!
+        { name: 'Diamond Cut', file: 'diamond_grill.glb' }      // update these files when you get them!
+    ];
+
+    const designs = modelUrl ? ['Your AI Design Estimation'] : grillConfig.map(c => c.name);
 
     const nextDesign = () => setIndex((prev) => (prev + 1) % designs.length);
     const prevDesign = () => setIndex((prev) => (prev - 1 + designs.length) % designs.length);
 
     const validModelUrl = modelUrl && typeof modelUrl === 'string' && modelUrl.trim() !== '' ? modelUrl : null;
+    const currentGrillFile = validModelUrl || `/models/${grillConfig[index].file}`;
 
     return (
         <section className={`webgl-section section ${hideHeader ? 'no-padding' : ''}`} id="showcase" style={hideHeader ? { background: 'transparent' } : {}}>
@@ -148,23 +171,44 @@ const WebGLShowcase = ({ forcedMaterial, hideHeader = false, modelUrl }) => {
                     <div className="canvas-wrapper">
                         <CanvasErrorBoundary>
                             <Suspense fallback={<ModelLoader />}>
-                                <Canvas camera={{ position: [0, 0, 4], fov: 45 }}>
-                                    <ambientLight intensity={0.5} />
-                                    <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-                                    <Environment preset="city" />
+                                <Canvas camera={{ position: [0, 0, 0.15], fov: 45, near: 0.001 }}>
+                                    <ambientLight intensity={0.8} />
+                                    <spotLight 
+                                        position={[Math.cos(lightRotation * Math.PI / 180) * 1.5, 1, Math.sin(lightRotation * Math.PI / 180) * 1.5]} 
+                                        angle={0.2} 
+                                        penumbra={1} 
+                                        intensity={100} 
+                                    />
+                                    <Suspense fallback={null}>
+                                        <Environment 
+                                            files="/models/studio.hdr" 
+                                            background={false} 
+                                            backgroundBlurriness={0.5} 
+                                            environmentRotation={[0, lightRotation * Math.PI / 180, 0]} 
+                                        />
+                                    </Suspense>
 
-                                    <Float speed={4} rotationIntensity={1} floatIntensity={2}>
+                                    <Float speed={2} rotationIntensity={0.05} floatIntensity={0.01}>
                                         <GrillModel
                                             geometryType={index}
                                             visible={true}
                                             color={forcedMaterial ? forcedMaterial.color : (index === 2 ? "#b9f2ff" : "#eec95e")}
                                             roughness={forcedMaterial ? forcedMaterial.roughness : 0.1}
-                                            modelUrl={validModelUrl}
+                                            modelUrl={currentGrillFile}
+                                            showUpperJaw={showUpperJaw}
+                                            showLowerJaw={showLowerJaw}
                                         />
                                     </Float>
 
-                                    <ContactShadows position={[0, -1.4, 0]} opacity={0.5} scale={10} blur={2.5} far={4} />
-                                    <OrbitControls enableZoom={true} enablePan={false} autoRotate />
+                                    <OrbitControls 
+                                        enableZoom={true} 
+                                        enablePan={false} 
+                                        autoRotate 
+                                        autoRotateSpeed={1} 
+                                        maxDistance={0.5} 
+                                        minDistance={0.01} 
+                                        target={[0, 0, -0.035]} 
+                                    />
                                 </Canvas>
                             </Suspense>
                         </CanvasErrorBoundary>

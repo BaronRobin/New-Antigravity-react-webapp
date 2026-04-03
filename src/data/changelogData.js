@@ -1,5 +1,14 @@
 export const changelogData = [
     {
+        version: "v0.9.6",
+        changes: [
+            "Overhauled Shop 3D Configurator with a modular architecture decoupling base jaw models from grillz overlays.",
+            "Enabled independent toggling of upper and lower jaw models.",
+            "Integrated new grillz variations including vampire teeth.",
+            "Added precise user controls for studio lighting rotation and camera positioning."
+        ]
+    },
+    {
         version: "v0.9.5",
         changes: [
             "Optimized mobile viewports: Scaled down major headlines using fluid typography clamps.",
