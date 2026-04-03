@@ -181,7 +181,7 @@ const WebGLShowcase = ({ forcedMaterial, hideHeader = false, modelUrl, showUpper
                                     />
                                     <Suspense fallback={null}>
                                         <Environment 
-                                            files="/models/studio.hdr" 
+                                            preset="city" 
                                             background={false} 
                                             backgroundBlurriness={0.5} 
                                             environmentRotation={[0, lightRotation * Math.PI / 180, 0]} 
