@@ -673,8 +673,8 @@ const AdminDashboard = () => {
                                                 <div style={{ display: 'flex', width: '100%', gap: '0' }}>
                                                     <button 
                                                         className="btn btn-secondary" 
-                                                        style={{ padding: '0.5rem', fontSize: '0.75rem', borderRadius: '4px 0 0 4px', width: '25%', color: '#aaa', borderColor: 'rgba(255,255,255,0.1)', cursor: generatingAiFor === editingUser ? 'not-allowed' : 'pointer' }} 
-                                                        onClick={() => handleGenerateAi(editingUser, tickets[editingUser]?.comments || editForm.adminNotes || "gold grillz", "v2.0-20240919")} 
+                                                        style={{ padding: '0.4rem', fontSize: '0.75rem', borderRadius: '4px 0 0 4px', flex: 1, color: '#aaa', borderColor: 'rgba(255,255,255,0.1)', cursor: generatingAiFor === editingUser ? 'not-allowed' : 'pointer' }} 
+                                                        onClick={() => handleGenerateAi(editingUser, tickets[editingUser]?.comments || editForm.adminNotes || "", "v2.0-20240919")} 
                                                         disabled={generatingAiFor === editingUser}
                                                         title="Tripo v2.0"
                                                     >
@@ -682,20 +682,29 @@ const AdminDashboard = () => {
                                                     </button>
                                                     <button 
                                                         className="btn btn-secondary" 
-                                                        style={{ padding: '0.5rem', fontSize: '0.8rem', borderRadius: '0', width: '50%', color: 'var(--color-accent)', borderColor: 'var(--color-accent)', borderLeft: 'none', borderRight: 'none', cursor: generatingAiFor === editingUser ? 'not-allowed' : 'pointer', fontWeight: 'bold' }} 
-                                                        onClick={() => handleGenerateAi(editingUser, tickets[editingUser]?.comments || editForm.adminNotes || "gold grillz", null)} 
+                                                        style={{ padding: '0.4rem', fontSize: '0.75rem', borderRadius: '0', flex: 1, color: '#ccc', borderColor: 'rgba(255,255,255,0.1)', borderLeft: 'none', cursor: generatingAiFor === editingUser ? 'not-allowed' : 'pointer' }} 
+                                                        onClick={() => handleGenerateAi(editingUser, tickets[editingUser]?.comments || editForm.adminNotes || "", "v2.5-20241004")} 
                                                         disabled={generatingAiFor === editingUser}
                                                     >
-                                                        {generatingAiFor === editingUser ? 'Generating...' : 'Current Model'}
+                                                        v2.5
                                                     </button>
                                                     <button 
                                                         className="btn btn-secondary" 
-                                                        style={{ padding: '0.5rem', fontSize: '0.75rem', borderRadius: '0 4px 4px 0', width: '25%', color: '#aaa', borderColor: 'rgba(255,255,255,0.1)', cursor: generatingAiFor === editingUser ? 'not-allowed' : 'pointer' }} 
-                                                        onClick={() => handleGenerateAi(editingUser, tickets[editingUser]?.comments || editForm.adminNotes || "gold grillz", "v3.0")} 
+                                                        style={{ padding: '0.4rem', fontSize: '0.75rem', borderRadius: '0', flex: 1, color: 'var(--color-accent)', borderColor: 'var(--color-accent)', borderLeft: 'none', cursor: generatingAiFor === editingUser ? 'not-allowed' : 'pointer', fontWeight: 'bold' }} 
+                                                        onClick={() => handleGenerateAi(editingUser, tickets[editingUser]?.comments || editForm.adminNotes || "", "v3.0-20250812")} 
                                                         disabled={generatingAiFor === editingUser}
                                                         title="Tripo v3.0"
                                                     >
                                                         v3.0
+                                                    </button>
+                                                    <button 
+                                                        className="btn btn-secondary" 
+                                                        style={{ padding: '0.4rem', fontSize: '0.75rem', borderRadius: '0 4px 4px 0', flex: 1, color: 'var(--color-accent)', borderColor: 'var(--color-accent)', borderLeft: 'none', cursor: generatingAiFor === editingUser ? 'not-allowed' : 'pointer', fontWeight: 'bold' }} 
+                                                        onClick={() => handleGenerateAi(editingUser, tickets[editingUser]?.comments || editForm.adminNotes || "", "v3.1-20260211")} 
+                                                        disabled={generatingAiFor === editingUser}
+                                                        title="Tripo v3.1"
+                                                    >
+                                                        v3.1
                                                     </button>
                                                 </div>
                                             )}

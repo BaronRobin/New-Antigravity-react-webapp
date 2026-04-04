@@ -12,8 +12,10 @@ export const generateGrillzMesh = async (userDescription, version = null) => {
         throw new Error("Tripo API key is missing from environment variables.");
     }
 
-    // The hidden system prompt that strictly formats the user's idea
-    const systemPrompt = `A flawless, isolated 3D model of custom dental grillz jewelry, floating on a neutral background. NO face, NO lips, NO skin, NO gums. Only the metallic upper and lower dental arch. Highly detailed, photorealistic, studio lighting. User design request: ${userDescription}`;
+    let systemPrompt = `A flawless, isolated 3D model of custom dental grillz jewelry, floating on a neutral background. NO face, NO lips, NO skin, NO gums. Only the metallic upper and lower dental arch. Highly detailed, photorealistic, studio lighting.`;
+    if (userDescription && userDescription.trim().length > 0) {
+        systemPrompt += ` User design request: ${userDescription}`;
+    }
 
     try {
         const IS_DEV = import.meta.env.DEV;
