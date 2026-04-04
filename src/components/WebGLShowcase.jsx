@@ -182,8 +182,8 @@ const WebGLShowcase = ({ forcedMaterial, hideHeader = false, hideFullscreen = fa
                     </div>
                 )}
 
-                <div className="showcase-card fade-in-up" style={hideHeader ? { background: 'transparent', boxShadow: 'none', flexGrow: 1, display: 'flex', flexDirection: 'column', padding: 0 } : { background: 'transparent', boxShadow: 'none', flexGrow: 1 }}>
-                    <div className="canvas-wrapper" style={hideHeader ? { height: '100%', flexGrow: 1, minHeight: '60vh' } : {}}>
+                <div className="showcase-card fade-in-up" style={hideHeader ? { background: 'transparent', border: 'none', boxShadow: 'none', flexGrow: 1, display: 'flex', flexDirection: 'column', padding: 0 } : { background: 'transparent', boxShadow: 'none', flexGrow: 1 }}>
+                    <div className="canvas-wrapper" style={hideHeader ? { height: '100%', flexGrow: 1, minHeight: 0 } : {}}>
                         <CanvasErrorBoundary>
                             <Suspense fallback={<ModelLoader />}>
                                 <Canvas camera={{ position: [0, 0, 0.15], fov: 45, near: 0.001 }}>
