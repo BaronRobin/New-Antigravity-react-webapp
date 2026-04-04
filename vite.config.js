@@ -6,6 +6,15 @@ import basicSsl from '@vitejs/plugin-basic-ssl'
 export default defineConfig({
   plugins: [react(), basicSsl()],
   base: process.env.NODE_ENV === 'production' ? '/3d-grillz/' : '/',
+  server: {
+    proxy: {
+      '/tripo-api': {
+        target: 'https://api.tripo3d.ai',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/tripo-api/, '')
+      }
+    }
+  },
   build: {
     rollupOptions: {
       output: {

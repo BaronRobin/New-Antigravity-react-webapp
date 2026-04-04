@@ -16,10 +16,21 @@ export const generateGrillzMesh = async (userDescription) => {
     const systemPrompt = `A flawless, isolated 3D model of custom dental grillz jewelry, floating on a neutral background. NO face, NO lips, NO skin, NO gums. Only the metallic upper and lower dental arch. Highly detailed, photorealistic, studio lighting. User design request: ${userDescription}`;
 
     try {
-        const CORS_PROXY = 'https://corsproxy.io/?';
+        const IS_DEV = import.meta.env.DEV;
+        
+        // Define paths
+        const TRIPO_BASE_URL = 'https://api.tripo3d.ai';
+        const submitRoute = '/v2/openapi/task';
+        
+        let submitUrl = '';
+        if (IS_DEV) {
+            submitUrl = '/tripo-api' + submitRoute;
+        } else {
+            submitUrl = 'https://corsproxy.io/?' + encodeURIComponent(TRIPO_BASE_URL + submitRoute);
+        }
         
         // 1. Submit the task
-        const response = await fetch(CORS_PROXY + encodeURIComponent('https://api.tripo3d.ai/v2/openapi/task'), {
+        const response = await fetch(submitUrl, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${API_KEY}`,
@@ -30,6 +41,12 @@ export const generateGrillzMesh = async (userDescription) => {
                 "prompt": systemPrompt
             })
         });
+
+        // Gracefully catch CloudFlare HTML blocks from proxies
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('text/html')) {
+            throw new Error(`Proxy Intercepted Request: The CORS proxy returned an HTML challenge instead of JSON data. Status: ${response.status}`);
+        }
 
         const data = await response.json();
         
@@ -45,11 +62,23 @@ export const generateGrillzMesh = async (userDescription) => {
             // Wait 2.5 seconds between polls
             await new Promise(resolve => setTimeout(resolve, 2500));
             
-            const pollResp = await fetch(CORS_PROXY + encodeURIComponent(`https://api.tripo3d.ai/v2/openapi/task/${taskId}`), {
+            let pollUrl = '';
+            if (IS_DEV) {
+                pollUrl = `/tripo-api/v2/openapi/task/${taskId}`;
+            } else {
+                pollUrl = 'https://corsproxy.io/?' + encodeURIComponent(`${TRIPO_BASE_URL}/v2/openapi/task/${taskId}`);
+            }
+            
+            const pollResp = await fetch(pollUrl, {
                 headers: {
                     'Authorization': `Bearer ${API_KEY}`
                 }
             });
+            
+            const pollContentType = pollResp.headers.get('content-type');
+            if (pollContentType && pollContentType.includes('text/html')) {
+                throw new Error(`Proxy Polling Intercepted: The CORS proxy blocked the status check. Status: ${pollResp.status}`);
+            }
             
             const pollData = await pollResp.json();
             
