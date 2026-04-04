@@ -223,22 +223,31 @@ const Dashboard = () => {
                     </div>
 
                     {/* TILE 3: MAIN SHOWCASE */}
-                    <div style={{ gridArea: 'showcase', position: 'relative', height: '100%', borderRadius: '20px', overflow: 'hidden' }} className="fade-in-up showcase-tile">
-                        <div className="glass" style={{ height: '100%', padding: '0', overflow: 'hidden', position: 'relative', borderRadius: '20px' }}>
-                            {order.custom_designs && order.custom_designs.length > 0 ? (
+                    <div style={{ gridArea: 'showcase', position: 'relative', height: '100%', minHeight: '400px', borderRadius: '20px', overflow: 'hidden' }} className="fade-in-up showcase-tile">
+                        {order.custom_designs && order.custom_designs.length > 0 ? (
+                            <div className="glass" style={{ height: '100%', padding: '0', overflow: 'hidden', position: 'relative', borderRadius: '20px' }}>
                                 <UserWebGLShowcase
                                     designs={order.custom_designs}
                                     requestedMaterialName={['Gold', 'Silver', 'Diamond'][order.modelType] || 'Gold'}
                                 />
-                            ) : (
+                            </div>
+                        ) : order.ai_mesh_url ? (
+                            <div className="glass" style={{ height: '100%', padding: '0', overflow: 'hidden', position: 'relative', borderRadius: '20px' }}>
                                 <WebGLShowcase
                                     hideHeader={true}
-                                    modelUrl={order.ai_mesh_url || null}
-                                    forcedMaterial={order.ai_mesh_url ? { color: '#eec95e', roughness: 0.1 } : null}
+                                    modelUrl={order.ai_mesh_url}
+                                    forcedMaterial={{ color: '#eec95e', roughness: 0.1 }}
                                 />
-                            )}
-
-                        </div>
+                            </div>
+                        ) : (
+                            <div className="glass-dark" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#888', borderRadius: '20px' }}>
+                                <div style={{ textAlign: 'center' }}>
+                                    <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem', opacity: 0.2 }}>⬡</div>
+                                    <h3 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.5rem' }}>Awaiting 3D Data</h3>
+                                    <p style={{ fontSize: '0.9rem', maxWidth: '250px', margin: '0 auto' }}>Your designer is currently preparing your custom 3D mesh.</p>
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     {/* TILE 5: MESSAGING */}
