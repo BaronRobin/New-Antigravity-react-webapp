@@ -5,7 +5,7 @@
  * @param {string} userDescription The raw design description from the user
  * @returns {Promise<string>} The URL of the generated .glb file
  */
-export const generateGrillzMesh = async (userDescription) => {
+export const generateGrillzMesh = async (userDescription, version = null) => {
     const API_KEY = import.meta.env.VITE_TRIPO_API_KEY;
     
     if (!API_KEY) {
@@ -29,6 +29,15 @@ export const generateGrillzMesh = async (userDescription) => {
             submitUrl = 'https://corsproxy.io/?' + encodeURIComponent(TRIPO_BASE_URL + submitRoute);
         }
         
+        const requestPayload = {
+            "type": "text_to_model",
+            "prompt": systemPrompt
+        };
+
+        if (version) {
+            requestPayload.model_version = version;
+        }
+
         // 1. Submit the task
         const response = await fetch(submitUrl, {
             method: 'POST',
@@ -36,10 +45,7 @@ export const generateGrillzMesh = async (userDescription) => {
                 'Authorization': `Bearer ${API_KEY}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                "type": "text_to_model",
-                "prompt": systemPrompt
-            })
+            body: JSON.stringify(requestPayload)
         });
 
         // Gracefully catch CloudFlare HTML blocks from proxies

@@ -35,10 +35,10 @@ const AdminDashboard = () => {
     // AI Generation State
     const [generatingAiFor, setGeneratingAiFor] = useState(null);
 
-    const handleGenerateAi = async (email, comments) => {
+    const handleGenerateAi = async (email, comments, version = null) => {
         try {
             setGeneratingAiFor(email);
-            const modelUrl = await generateGrillzMesh(comments);
+            const modelUrl = await generateGrillzMesh(comments, version);
             const res = await saveAiMeshToTicket(email, modelUrl);
             if (!res.success) {
                 const manual = window.confirm(`Browser security blocked the automatic database upload.\n\nHowever, the 3D model WAS generated successfully by Tripo3D!\n\nWould you like to manually download the .glb file now? You can then use the 'Upload Custom Design' box below to attach it to the client's order.`);
@@ -670,9 +670,34 @@ const AdminDashboard = () => {
                                                     </button>
                                                 </div>
                                             ) : (
-                                                <button className="btn btn-secondary" style={{ padding: '0.5rem', fontSize: '0.8rem', borderRadius: '4px', width: '100%', color: 'var(--color-accent)', borderColor: 'var(--color-accent)' }} onClick={() => handleGenerateAi(editingUser, tickets[editingUser]?.comments || editForm.adminNotes || "gold grillz")} disabled={generatingAiFor === editingUser}>
-                                                    {generatingAiFor === editingUser ? 'Generating... (~15s)' : 'Generate AI Concept'}
-                                                </button>
+                                                <div style={{ display: 'flex', width: '100%', gap: '0' }}>
+                                                    <button 
+                                                        className="btn btn-secondary" 
+                                                        style={{ padding: '0.5rem', fontSize: '0.75rem', borderRadius: '4px 0 0 4px', width: '25%', color: '#aaa', borderColor: 'rgba(255,255,255,0.1)', cursor: generatingAiFor === editingUser ? 'not-allowed' : 'pointer' }} 
+                                                        onClick={() => handleGenerateAi(editingUser, tickets[editingUser]?.comments || editForm.adminNotes || "gold grillz", "v2.0-20240919")} 
+                                                        disabled={generatingAiFor === editingUser}
+                                                        title="Tripo v2.0"
+                                                    >
+                                                        v2.0
+                                                    </button>
+                                                    <button 
+                                                        className="btn btn-secondary" 
+                                                        style={{ padding: '0.5rem', fontSize: '0.8rem', borderRadius: '0', width: '50%', color: 'var(--color-accent)', borderColor: 'var(--color-accent)', borderLeft: 'none', borderRight: 'none', cursor: generatingAiFor === editingUser ? 'not-allowed' : 'pointer', fontWeight: 'bold' }} 
+                                                        onClick={() => handleGenerateAi(editingUser, tickets[editingUser]?.comments || editForm.adminNotes || "gold grillz", null)} 
+                                                        disabled={generatingAiFor === editingUser}
+                                                    >
+                                                        {generatingAiFor === editingUser ? 'Generating...' : 'Current Model'}
+                                                    </button>
+                                                    <button 
+                                                        className="btn btn-secondary" 
+                                                        style={{ padding: '0.5rem', fontSize: '0.75rem', borderRadius: '0 4px 4px 0', width: '25%', color: '#aaa', borderColor: 'rgba(255,255,255,0.1)', cursor: generatingAiFor === editingUser ? 'not-allowed' : 'pointer' }} 
+                                                        onClick={() => handleGenerateAi(editingUser, tickets[editingUser]?.comments || editForm.adminNotes || "gold grillz", "v3.0")} 
+                                                        disabled={generatingAiFor === editingUser}
+                                                        title="Tripo v3.0"
+                                                    >
+                                                        v3.0
+                                                    </button>
+                                                </div>
                                             )}
                                         </div>
                                         <div style={{ marginTop: '1rem', borderTop: '1px solid rgba(201,169,97,0.1)', paddingTop: '1rem' }}>
