@@ -146,8 +146,21 @@
     }
 
     .design-controls {
-        width: 90%;
-        gap: 1rem;
-        padding: 0.8rem 1rem;
+        width: 95%;
+        max-width: 400px;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        justify-content: space-between;
+    }
+
+    .design-info h3 {
+        min-width: unset;
+        font-size: 0.9rem;
+    }
+
+    .control-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
     }
 }
