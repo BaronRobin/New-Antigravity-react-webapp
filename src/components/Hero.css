@@ -16,7 +16,7 @@
     z-index: 0;
 }
 
-.hero-video {
+.hero-carousel-img {
     position: absolute;
     top: 0;
     left: 0;
@@ -24,6 +24,12 @@
     height: 100%;
     object-fit: cover;
     z-index: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.hero-carousel-img.active {
+    opacity: 1;
 }
 
 .hero-video-placeholder {

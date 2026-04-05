@@ -33,7 +33,9 @@ export const generateGrillzMesh = async (userDescription, version = null) => {
         
         const requestPayload = {
             "type": "text_to_model",
-            "prompt": systemPrompt
+            "prompt": systemPrompt,
+            "texture": false,
+            "pbr": false
         };
 
         if (version) {

@@ -1,17 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Hero.css';
 
+// Dynamically import all standard image formats in the target directory
+const imageModules = import.meta.glob('../assets/hero-images/*.{png,jpg,jpeg,webp,avif}', { eager: true });
+const absoluteImages = Object.values(imageModules).map(mod => mod.default);
+
 const Hero = () => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        if (absoluteImages.length <= 1) return;
+        
+        const interval = setInterval(() => {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % absoluteImages.length);
+        }, 3000); // Hold for 3 seconds
+        
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <section className="hero" id="hero">
             <div className="hero-background">
-                {/* User to replace src with actual webm video path */}
-                {/* <video autoPlay loop muted playsInline className="hero-video">
-                    <source src={`${import.meta.env.BASE_URL}assets/hero-loop.webm`} type="video/webm" />
-                </video> */}
-                {/* Placeholder gradient until video is added */}
-                <div className="hero-video-placeholder"></div>
+                {absoluteImages.length > 0 ? (
+                    absoluteImages.map((src, idx) => (
+                        <img 
+                            key={idx}
+                            src={src}
+                            alt=""
+                            className={`hero-carousel-img ${idx === currentIndex ? 'active' : ''}`}
+                        />
+                    ))
+                ) : (
+                    <div className="hero-video-placeholder"></div>
+                )}
                 <div className="hero-overlay"></div>
             </div>
 
