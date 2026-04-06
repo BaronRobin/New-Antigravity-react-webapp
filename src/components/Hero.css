@@ -69,11 +69,15 @@
 .hero-title {
     font-size: clamp(2.5rem, 8vw, 5.5rem);
     font-weight: 800;
-    letter-spacing: -3px;
-    margin-bottom: 1.5rem;
-    line-height: 1.1;
-    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+    letter-spacing: -1px;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    /* Use filter: drop-shadow instead of text-shadow for background-clip compatibility */
+    filter: drop-shadow(2px 3px 2px rgba(0, 0, 0, 1));
+}
+
+.hero-title span {
+    display: inline-block;
 }
 
 .gradient-text {
@@ -108,8 +112,9 @@
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-    opacity: 0.6;
+    opacity: 0.8;
     margin-top: 3rem;
+    filter: drop-shadow(2px 3px 2px rgba(0, 0, 0, 1));
 }
 
 .scroll-mouse {
