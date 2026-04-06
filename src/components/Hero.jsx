@@ -43,9 +43,7 @@ const Hero = () => {
                     <br />For Custom Grillz
                 </h1>
 
-                <p className="hero-subtitle fade-in-up stagger-2" style={{ maxWidth: '800px', margin: '0 auto 2.5rem', fontSize: '1.3rem' }}>
-                    No app installations. No physical meetups required. A completely seamless, customer-friendly web hub bridging custom 3D-modeling with cutting-edge physical craftsmanship.
-                </p>
+
 
                 <div className="hero-cta fade-in-up stagger-3">
                     <button
