@@ -10,32 +10,32 @@ const DigitalPipeline = () => {
         {
             number: '01', title: 'Request',
             description: 'Initiate your custom grillz journey directly from our digital shop. No physical meetups required.',
-            videoSrc: `${import.meta.env.BASE_URL}assets/pipeline-placeholder.mp4`
+            videoSrc: `${import.meta.env.BASE_URL}assets/step01.mp4`
         },
         {
             number: '02', title: 'Dashboard',
             description: 'Log in to your exclusive client dashboard to review live design progress and interactive 3D variants.',
-            videoSrc: `${import.meta.env.BASE_URL}assets/pipeline-placeholder.mp4`
+            videoSrc: `${import.meta.env.BASE_URL}assets/step02.mp4`
         },
         {
             number: '03', title: 'Imprint & Scan',
             description: 'Provide a standard physical teeth imprint mold, or send over a high-fidelity 3D intraoral scan.',
-            videoSrc: `${import.meta.env.BASE_URL}assets/pipeline-placeholder.mp4`
+            videoSrc: `${import.meta.env.BASE_URL}assets/step03.mp4`
         },
         {
             number: '04', title: '3D Design',
             description: 'We sculpt and design your custom idea into a photorealistic 3D printable model.',
-            videoSrc: `${import.meta.env.BASE_URL}assets/pipeline-placeholder.mp4`
+            videoSrc: `${import.meta.env.BASE_URL}assets/step04.mp4`
         },
         {
             number: '05', title: 'Craftsmanship',
             description: 'The raw casting is hand-finished and polished. Premium stones are bead-set under microscope.',
-            videoSrc: `${import.meta.env.BASE_URL}assets/pipeline-placeholder.mp4`
+            videoSrc: `${import.meta.env.BASE_URL}assets/step05.mp4`
         },
         {
             number: '06', title: 'Checkout & Shipping',
             description: 'Pay for your custom masterpiece and have it securely packaged and shipped fully insured, directly to your door.',
-            videoSrc: `${import.meta.env.BASE_URL}assets/pipeline-placeholder.mp4`
+            videoSrc: `${import.meta.env.BASE_URL}assets/step06.mp4`
         }
     ];
 
