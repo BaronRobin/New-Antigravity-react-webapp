@@ -5,6 +5,23 @@ import { OrbitControls, Float, Environment, ContactShadows, useGLTF } from '@rea
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 import './WebGLShowcase.css';
 
+// Configuration array mapping the UI name to the actual 3D file name in public/models
+const grillConfig = [
+    { name: 'Window Upper', file: 'WindowUpper.glb', type: 'upper' },
+    { name: 'Window Lower', file: 'WindowLower.glb', type: 'lower' },
+    { name: 'Caps Upper', file: 'CapsUpper.glb', type: 'upper' },
+    { name: 'Caps Lower', file: 'CapsLower.glb', type: 'lower' },
+    { name: 'Spiral Upper', file: 'SpiralUpper.glb', type: 'upper' },
+    { name: 'Window Cap Upper', file: 'WindowCapUpper.glb', type: 'upper' }
+];
+
+// Preload models for immediate switching
+grillConfig.forEach(c => {
+    useGLTF.preload(`${import.meta.env.BASE_URL}models/${c.file}`);
+});
+useGLTF.preload(`${import.meta.env.BASE_URL}models/upper_teeth.glb`);
+useGLTF.preload(`${import.meta.env.BASE_URL}models/lower_teeth.glb`);
+
 // Error Boundary for the WebGL Canvas
 class CanvasErrorBoundary extends React.Component {
     constructor(props) {
@@ -71,9 +88,12 @@ const ModelLoader = () => (
 const CustomModel = ({ url, color, roughness, metalness = 1.0 }) => {
     const { scene } = useGLTF(url);
 
+    // Create a stable clone of the scene that doesn't re-clone on every frame
+    const clonedScene = React.useMemo(() => scene.clone(), [scene]);
+
     React.useEffect(() => {
-        if (scene) {
-            scene.traverse((child) => {
+        if (clonedScene) {
+            clonedScene.traverse((child) => {
                 if (child.isMesh && child.material) {
                     const applyMaterial = (mat) => {
                         mat.color.set(color);
@@ -92,9 +112,25 @@ const CustomModel = ({ url, color, roughness, metalness = 1.0 }) => {
                 }
             });
         }
-    }, [scene, color, roughness, metalness]);
 
-    return <primitive object={scene} scale={1} />;
+        // Cleanup function to prevent memory leaks/context loss
+        return () => {
+            clonedScene.traverse((child) => {
+                if (child.isMesh) {
+                    if (child.geometry) child.geometry.dispose();
+                    if (child.material) {
+                        if (Array.isArray(child.material)) {
+                            child.material.forEach(m => m.dispose());
+                        } else {
+                            child.material.dispose();
+                        }
+                    }
+                }
+            });
+        };
+    }, [clonedScene, color, roughness, metalness]);
+
+    return <primitive object={clonedScene} scale={1} />;
 };
 
 const GrillModel = ({ visible, geometryType, color = "#eec95e", roughness = 0.1, modelUrl, showUpperJaw, showLowerJaw }) => {
@@ -158,12 +194,19 @@ const WebGLShowcase = ({ forcedMaterial, hideHeader = false, hideFullscreen = fa
         }, 10000);
     };
     
-    // Configuration array mapping the UI name to the actual 3D file name in public/models
-    const grillConfig = [
-        { name: 'Vampire Fangs', file: 'vampire_teeth.glb' },
-        { name: 'Classic Grill', file: 'classic_grill.glb' },   // update these files when you get them!
-        { name: 'Diamond Cut', file: 'diamond_grill.glb' }      // update these files when you get them!
-    ];
+    // Automatically toggle jaws when switching models for better UX
+    React.useEffect(() => {
+        if (grillConfig[index]) {
+            const config = grillConfig[index];
+            if (config.type === 'upper') {
+                setShowUpperJaw(true);
+                setShowLowerJaw(false);
+            } else if (config.type === 'lower') {
+                setShowUpperJaw(false);
+                setShowLowerJaw(true);
+            }
+        }
+    }, [index]);
 
     const designs = modelUrl ? ['Your AI Design Estimation'] : grillConfig.map(c => c.name);
 
@@ -205,9 +248,10 @@ const WebGLShowcase = ({ forcedMaterial, hideHeader = false, hideFullscreen = fa
 
                                     <Float speed={2} rotationIntensity={0} floatIntensity={0.02}>
                                         <GrillModel
+                                            key={currentGrillFile}
                                             geometryType={index}
                                             visible={true}
-                                            color={forcedMaterial ? forcedMaterial.color : (index === 2 ? "#b9f2ff" : "#eec95e")}
+                                            color={forcedMaterial ? forcedMaterial.color : "#eec95e"}
                                             roughness={forcedMaterial ? forcedMaterial.roughness : 0.1}
                                             modelUrl={currentGrillFile}
                                             showUpperJaw={showUpperJaw}

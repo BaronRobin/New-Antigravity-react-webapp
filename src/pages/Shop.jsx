@@ -18,8 +18,8 @@ const Shop = () => {
     const materials = [
         { id: 'gold', name: 'Gold', className: 'mat-gold', color: '#eec95e', roughness: 0.1 },
         { id: 'silver', name: 'Sterling Silver', className: 'mat-silver', color: '#e2e2e2', roughness: 0.05 },
-        { id: 'titanium', name: 'Titanium', className: 'mat-titanium', color: '#a0b2c6', roughness: 0.4 },
-        { id: 'rose-gold', name: 'Rose Gold', className: 'mat-rose', color: '#e0bfb8', roughness: 0.3 }
+        { id: 'titanium', name: 'Titanium', className: 'mat-titanium', color: '#a0b2c6', roughness: 0.08 },
+        { id: 'rose-gold', name: 'Rose Gold', className: 'mat-rose', color: '#e0bfb8', roughness: 0.05 }
     ];
 
     const currentMaterialProps = materials.find(m => m.id === selectedMaterial);
