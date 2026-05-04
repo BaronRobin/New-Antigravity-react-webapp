@@ -39,7 +39,7 @@ const Footer = () => {
                         <ul style={{ listStyle: 'none', padding: 0 }}>
                             <li><a href="https://instagram.com/stuffmadebyrob" target="_blank" rel="noopener noreferrer" className="footer-nav-btn"><FaInstagram style={{ marginRight: '8px' }} /> Instagram</a></li>
                             <li><a href="https://www.linkedin.com/in/baron-robin/" target="_blank" rel="noopener noreferrer" className="footer-nav-btn"><FaLinkedin style={{ marginRight: '8px' }} /> LinkedIn</a></li>
-                            <li><a href="#" target="_blank" rel="noopener noreferrer" className="footer-nav-btn"><FaGithub style={{ marginRight: '8px' }} /> GitHub</a></li>
+                            <li><a href="https://github.com/BaronRobin" target="_blank" rel="noopener noreferrer" className="footer-nav-btn"><FaGithub style={{ marginRight: '8px' }} /> GitHub</a></li>
                         </ul>
                     </div>
                 </div>
