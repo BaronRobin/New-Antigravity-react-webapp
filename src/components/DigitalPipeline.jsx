@@ -55,15 +55,15 @@ const DigitalPipeline = () => {
                             key={step.number}
                             className={`pipeline-card fade-in-up stagger-${index + 1}`}
                         >
-                            <video 
-                                className="pipeline-video" 
-                                autoPlay 
-                                loop 
-                                muted 
-                                playsInline 
+                            <video
+                                className="pipeline-video"
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
                                 src={step.videoSrc}
                             ></video>
-                            
+
                             <div className="pipeline-overlay"></div>
 
                             <div className="step-content">
